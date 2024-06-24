@@ -3,7 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class StreamLocationService {
   static const LocationSettings _locationSettings =
-  LocationSettings(distanceFilter: 1);
+  LocationSettings(distanceFilter: 1, timeLimit: const Duration(seconds: 5));
   static bool _isLocationGranted = false;
 
   static  Stream<Position>? get onLocationChanged  {

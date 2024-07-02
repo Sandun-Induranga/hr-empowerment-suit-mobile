@@ -8,10 +8,6 @@ import '../../constants/color_codes.dart';
 import '../gap_widgets/horizontal_gap_consistent.dart';
 
 class CommonAppBar extends StatelessWidget {
-  /// The [CommonAppBar] widget provides a customizable app bar for common pages.
-  /// It allows customization of various aspects such as the leading widget,
-  /// action widget, title widget, centering of the title, and toolbar height.
-  /// The app bar is designed to have a transparent background and zero elevation.
   const CommonAppBar({
     super.key,
     this.leadingWidget,
@@ -23,22 +19,16 @@ class CommonAppBar extends StatelessWidget {
     this.isHomeRedirectEnable = true,
   });
 
-  /// Optional widget to be displayed as the leading position of the app bar.
   final Widget? leadingWidget;
 
-  /// Optional widget to be displayed as an action in the app bar.
   final Widget? actionWidget;
 
-  /// isCenterTitle = true,
   final bool isCenterTitle;
 
-  /// toolbarHeight = 44,
   final double toolbarHeight;
 
-  /// leadingWidth = 100,
   final double leadingWidth;
 
-  /// Optional widget to be displayed as the title of the app bar.
   final Widget? titleWidget;
 
   final bool isHomeRedirectEnable;
@@ -86,7 +76,7 @@ class CommonAppBar extends StatelessWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) {
-                            return const BottomNavigatorView();
+                            return const BottomNavigationView();
                           },
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {

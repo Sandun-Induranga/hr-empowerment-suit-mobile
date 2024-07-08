@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/features/chat_bot/chat_bot_view.dart';
+import 'package:hr_app/features/contact/reach_hr_view.dart';
 import 'package:hr_app/features/home/home_view.dart';
 import 'package:hr_app/features/profile/profile_screen.dart';
 
@@ -33,7 +34,7 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Text('Search'),
+    const ReachHRScreen(),
     const ChatScreen(),
     const ProfileScreen(),
   ];

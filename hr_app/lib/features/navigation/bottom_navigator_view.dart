@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/features/chat_bot/chat_bot_view.dart';
 
 import '../../core/constants/color_codes.dart';
 import '../../core/widgets/common_page_widgets/common_page_boiler_plate.dart';
@@ -31,7 +32,7 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
   final List<Widget> _screens = [
     const Text('Home'),
     const Text('Search'),
-    const Text('Favourite'),
+    const ChatScreen(),
     const Text('Profile'),
   ];
 
@@ -73,11 +74,11 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                Icons.search,
                 size: 32.w,
               ),
               activeIcon: Icon(
-                Icons.home_filled,
+                Icons.search_off_rounded,
                 size: 32.w,
               ),
               label: '',
@@ -95,11 +96,11 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                Icons.person_outline,
                 size: 32.w,
               ),
               activeIcon: Icon(
-                Icons.home_filled,
+                Icons.person,
                 size: 32.w,
               ),
               label: '',

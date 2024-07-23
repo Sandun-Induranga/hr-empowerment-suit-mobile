@@ -15,8 +15,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late AnimationController _rainAnimationController;
   late Timer _colorChangeTimer;
-  List<Raindrop> _raindrops = [];
-  Random _random = Random();
+  final List<Raindrop> _raindrops = [];
+  final Random _random = Random();
   bool _isRaindropsGenerated = false;
   Color _currentColor = Colors.blue;
 
@@ -35,7 +35,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
     _rainAnimationController.repeat();
 
-    _colorChangeTimer = Timer.periodic(Duration(seconds: 2), (timer) {
+    _colorChangeTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
       setState(() {
         _currentColor = Color.fromRGBO(
           _random.nextInt(256),
@@ -178,15 +178,15 @@ class ChatBubble extends StatelessWidget {
       child: Align(
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          padding: EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: isUser ? Colors.deepPurple : Colors.grey[300],
             borderRadius: BorderRadius.only(
-              topLeft: isUser ? Radius.circular(10) : Radius.circular(0),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: isUser ? Radius.circular(0) : Radius.circular(10),
+              topLeft: isUser ? const Radius.circular(10) : const Radius.circular(0),
+              topRight: const Radius.circular(10),
+              bottomLeft: const Radius.circular(10),
+              bottomRight: isUser ? const Radius.circular(0) : const Radius.circular(10),
             ),
           ),
           child: Text(

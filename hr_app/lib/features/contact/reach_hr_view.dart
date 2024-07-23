@@ -15,18 +15,11 @@ class ReachHRScreenState extends State<ReachHRScreen> {
   final _messageController = TextEditingController();
   final _reasonController = TextEditingController();
   String? _selectedProject;
-  String? _selectedRecipient;
   DateTime? _startDate;
   int? _numOfDays;
   final String _status = 'Pending';
 
   final List<String> projects = ['Project A', 'Project B', 'Project C'];
-  final List<String> recipients = [
-    'HR',
-    'All Project Members',
-    'Project Manager',
-    'Company Members'
-  ];
 
   @override
   void dispose() {
@@ -39,7 +32,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
   void _sendEmail() {
     if (_formKey.currentState!.validate()) {
       // Implement email sending logic here
-      print('Sending email to $_selectedRecipient for $_selectedProject');
+      print('Sending email to HR for $_selectedProject');
       print('Subject: ${_subjectController.text}');
       print('Message: ${_messageController.text}');
     }
@@ -75,6 +68,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reach HR'),
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -83,10 +77,14 @@ class ReachHRScreenState extends State<ReachHRScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Send Emails',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                'Send Email to HR',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
+                ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Form(
                 key: _formKey,
                 child: Column(
@@ -106,62 +104,77 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                           _selectedProject = newValue;
                         });
                       },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
                       validator: (value) =>
                       value == null ? 'Please select a project' : null,
                     ),
-                    const SizedBox(height: 10),
-                    DropdownButtonFormField<String>(
-                      value: _selectedRecipient,
-                      hint: const Text('Select Recipient'),
-                      items: recipients.map((String recipient) {
-                        return DropdownMenuItem<String>(
-                          value: recipient,
-                          child: Text(recipient),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedRecipient = newValue;
-                        });
-                      },
-                      validator: (value) =>
-                      value == null ? 'Please select a recipient' : null,
-                    ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _subjectController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Subject',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                       validator: (value) =>
                       value!.isEmpty ? 'Please enter a subject' : null,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _messageController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Message',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                       maxLines: 5,
                       validator: (value) =>
                       value!.isEmpty ? 'Please enter a message' : null,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _sendEmail,
-                      child: const Text('Send Email'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
+                      ),
+                      child: const Text(
+                        'Send Email',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               const Text(
                 'Submit Leave Request',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
+                ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Form(
                 key: _leaveFormKey,
                 child: Column(
@@ -171,7 +184,12 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                       readOnly: true,
                       decoration: InputDecoration(
                         labelText: 'Start Date',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_today),
                           onPressed: () => _selectStartDate(context),
@@ -185,12 +203,17 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                       validator: (value) =>
                       value!.isEmpty ? 'Please select a start date' : null,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Number of Days',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                       onChanged: (value) {
                         _numOfDays = int.tryParse(value);
@@ -205,21 +228,37 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _reasonController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Reason',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.teal.shade50,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                       maxLines: 3,
                       validator: (value) =>
                       value!.isEmpty ? 'Please enter a reason' : null,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _submitLeaveRequest,
-                      child: const Text('Submit Leave Request'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
+                      ),
+                      child: const Text(
+                        'Submit Leave Request',
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ],
                 ),

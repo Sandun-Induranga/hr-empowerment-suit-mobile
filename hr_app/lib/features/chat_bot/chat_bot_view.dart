@@ -101,7 +101,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chatbot UI'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.teal,
       ),
       body: Stack(
         children: [
@@ -142,7 +142,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     ),
                     IconButton(
                       icon: const Icon(Icons.send),
-                      color: Colors.deepPurple,
+                      color: Colors.teal,
                       onPressed: _sendMessage,
                     ),
                   ],

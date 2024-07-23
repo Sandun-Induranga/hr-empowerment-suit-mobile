@@ -66,69 +66,56 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                Icons.dashboard_customize_outlined,
                 size: 32.w,
+                color: ColorCodes.lightGreyColor,
               ),
               activeIcon: Icon(
-                Icons.home_filled,
+                Icons.dashboard_customize,
                 size: 32.w,
+                color: Colors.teal,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.search,
+                Icons.mail_outline,
                 size: 32.w,
+                color: ColorCodes.lightGreyColor,
               ),
               activeIcon: Icon(
-                Icons.search_off_rounded,
+                Icons.mail,
                 size: 32.w,
+                color: Colors.teal,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.home_outlined,
+                Icons.movie_outlined,
                 size: 32.w,
+                color: ColorCodes.lightGreyColor,
               ),
               activeIcon: Icon(
-                Icons.home_filled,
+                Icons.movie,
                 size: 32.w,
+                color: Colors.teal,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.person_outline,
+                Icons.person_2_outlined,
                 size: 32.w,
+                color: ColorCodes.lightGreyColor,
               ),
               activeIcon: Icon(
-                Icons.person,
+                Icons.person_2_rounded,
                 size: 32.w,
+                color: Colors.teal,
               ),
               label: '',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Image.asset(Assets.searchNotSelect,
-            //     width: 32.w, height: 32.w,),
-            //   activeIcon: Image.asset(Assets.searchSelect,
-            //     width: 32.w, height: 32.w,),
-            //   label: '',
-            // ),
-            // BottomNavigationBarItem(
-            //   icon: Image.asset(Assets.heartNotSelect,
-            //     width: 32.w, height: 32.w,),
-            //   activeIcon: Image.asset(Assets.heartSelect,
-            //     width: 32.w, height: 32.w,),
-            //   label: '',
-            // ),
-            // BottomNavigationBarItem(
-            //   icon: Image.asset(Assets.userCircleNotSelect,
-            //     width: 32.w, height: 32.w,),
-            //   activeIcon: Image.asset(Assets.userSelect,
-            //     width: 32.w, height: 32.w,),
-            //   label: '',
-            // ),
           ],
         ),
       ),

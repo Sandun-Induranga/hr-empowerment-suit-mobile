@@ -34,7 +34,7 @@ abstract class ColorCodes {
   static const Color blackColor = Color(0xFF000000);
 
   /// [Color(0xff063057)]
-  static const Color darkBlueColor = Color(0xff063057);
+  static const Color darkBlueColor = Color(0xff2051E5);
 
   /// [Color(0x21212166)]
   static const Color boderColor = Color(0x21212166);

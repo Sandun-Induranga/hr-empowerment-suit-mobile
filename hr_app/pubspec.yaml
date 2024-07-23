@@ -39,6 +39,7 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_keyboard_visibility: ^6.0.0
   flutter_screenutil: ^5.9.3
+  flutter_spinkit: ^5.2.1
 
 dev_dependencies:
   flutter_test:

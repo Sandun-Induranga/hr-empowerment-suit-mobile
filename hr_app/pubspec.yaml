@@ -66,6 +66,14 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/fonts/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

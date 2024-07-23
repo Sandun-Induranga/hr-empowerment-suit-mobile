@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReachHRScreen extends StatefulWidget {
   const ReachHRScreen({super.key});
@@ -9,10 +10,15 @@ class ReachHRScreen extends StatefulWidget {
 
 class ReachHRScreenState extends State<ReachHRScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _leaveFormKey = GlobalKey<FormState>();
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
+  final _reasonController = TextEditingController();
   String? _selectedProject;
   String? _selectedRecipient;
+  DateTime? _startDate;
+  int? _numOfDays;
+  final String _status = 'Pending';
 
   final List<String> projects = ['Project A', 'Project B', 'Project C'];
   final List<String> recipients = [
@@ -26,6 +32,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
   void dispose() {
     _subjectController.dispose();
     _messageController.dispose();
+    _reasonController.dispose();
     super.dispose();
   }
 
@@ -35,6 +42,31 @@ class ReachHRScreenState extends State<ReachHRScreen> {
       print('Sending email to $_selectedRecipient for $_selectedProject');
       print('Subject: ${_subjectController.text}');
       print('Message: ${_messageController.text}');
+    }
+  }
+
+  void _submitLeaveRequest() {
+    if (_leaveFormKey.currentState!.validate()) {
+      // Implement leave request submission logic here
+      print('Submitting leave request');
+      print('Start Date: ${DateFormat('yyyy-MM-dd').format(_startDate!)}');
+      print('Number of Days: $_numOfDays');
+      print('Reason: ${_reasonController.text}');
+      print('Status: $_status');
+    }
+  }
+
+  Future<void> _selectStartDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _startDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null && pickedDate != _startDate) {
+      setState(() {
+        _startDate = pickedDate;
+      });
     }
   }
 
@@ -50,14 +82,6 @@ class ReachHRScreenState extends State<ReachHRScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'HR Notices',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              _buildHRNotice('Company meeting on Friday at 10 AM'),
-              _buildHRNotice('Submit your project reports by end of the month'),
-              const SizedBox(height: 20),
               const Text(
                 'Send Emails',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -83,7 +107,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         });
                       },
                       validator: (value) =>
-                          value == null ? 'Please select a project' : null,
+                      value == null ? 'Please select a project' : null,
                     ),
                     const SizedBox(height: 10),
                     DropdownButtonFormField<String>(
@@ -101,7 +125,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         });
                       },
                       validator: (value) =>
-                          value == null ? 'Please select a recipient' : null,
+                      value == null ? 'Please select a recipient' : null,
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -111,7 +135,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         border: OutlineInputBorder(),
                       ),
                       validator: (value) =>
-                          value!.isEmpty ? 'Please enter a subject' : null,
+                      value!.isEmpty ? 'Please enter a subject' : null,
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -122,7 +146,7 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                       ),
                       maxLines: 5,
                       validator: (value) =>
-                          value!.isEmpty ? 'Please enter a message' : null,
+                      value!.isEmpty ? 'Please enter a message' : null,
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
@@ -132,18 +156,77 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              const Text(
+                'Submit Leave Request',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Form(
+                key: _leaveFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        labelText: 'Start Date',
+                        border: OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.calendar_today),
+                          onPressed: () => _selectStartDate(context),
+                        ),
+                      ),
+                      controller: TextEditingController(
+                        text: _startDate == null
+                            ? ''
+                            : DateFormat('yyyy-MM-dd').format(_startDate!),
+                      ),
+                      validator: (value) =>
+                      value!.isEmpty ? 'Please select a start date' : null,
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Number of Days',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        _numOfDays = int.tryParse(value);
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter number of days';
+                        } else if (int.tryParse(value) == null ||
+                            int.tryParse(value)! <= 0) {
+                          return 'Please enter a valid number of days';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: _reasonController,
+                      decoration: const InputDecoration(
+                        labelText: 'Reason',
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 3,
+                      validator: (value) =>
+                      value!.isEmpty ? 'Please enter a reason' : null,
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: _submitLeaveRequest,
+                      child: const Text('Submit Leave Request'),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildHRNotice(String notice) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      child: ListTile(
-        title: Text(notice),
       ),
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/core/constants/app_paddings.dart';
+import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 
 import '../../../../core/constants/color_codes.dart';
 
@@ -19,34 +22,60 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorCodes.primaryColor.withOpacity(0.1),
+      decoration: BoxDecoration(
+        color: ColorCodes.primaryColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      margin: EdgeInsets.only(bottom: 10.h),
       child: ListTile(
-        title: Text(name),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Text(
+          name,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: status == 'In Progress'
-                    ? Colors.green
-                    : status == 'Completed'
-                        ? Colors.blue
-                        : Colors.red,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'Status: $status',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppPaddings.p12,
+                    vertical: AppPaddings.p4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: status == 'In Progress'
+                        ? ColorCodes.greenColor
+                        : status == 'Completed'
+                            ? ColorCodes.redColor
+                            : ColorCodes.yellowColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'Status: $status',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ColorCodes.whiteColor,
+                    ),
+                  ),
                 ),
-              ),
+                VerticalGapWidget(AppPaddings.p8.h),
+                Text('Role: $role'),
+                VerticalGapWidget(AppPaddings.p4.h),
+                Text('Start Date: $startDate'),
+              ],
             ),
-            Text('Role: $role'),
-            Text('Start Date: $startDate'),
+            Icon(
+              Icons.pivot_table_chart_rounded,
+              size: 50.r,
+                color: status == 'In Progress'
+                    ? ColorCodes.greenColor
+                    : status == 'Completed'
+                    ? ColorCodes.redColor
+                    : ColorCodes.yellowColor,
+            ),
           ],
         ),
       ),

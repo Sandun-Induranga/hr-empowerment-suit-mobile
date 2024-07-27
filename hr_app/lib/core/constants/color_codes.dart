@@ -6,7 +6,7 @@ abstract class ColorCodes {
   ColorCodes._();
 
   /// greenColor
-  static const Color greenColor = Color(0xFF122C30);
+  static const Color greenColor = Color(0xFF006d77);
 
   /// [Color(0xFF2051E5)]
   static const Color primaryColor = Color(0xFF3369FF);
@@ -23,7 +23,8 @@ abstract class ColorCodes {
 
   static const Color lightGreyColorAlpha = Color(0x76767680);
 
-  static const Color redColor = Color(0xFF7E1B1B);
+  static const Color redColor = Color(0xFFfb6f92);
+  static const Color yellowColor = Color(0xFFee9b00);
 
   /// [Color(0x66212121)]
   static const Color backgroundColor = Color(0x66212121);

@@ -13,7 +13,7 @@ class CommonAppBar extends StatelessWidget {
     this.leadingWidget,
     this.actionWidget,
     this.isCenterTitle = true,
-    this.toolbarHeight = 54,
+    this.toolbarHeight = 84,
     this.leadingWidth = 50,
     this.titleWidget,
     this.isHomeRedirectEnable = true,
@@ -45,7 +45,7 @@ class CommonAppBar extends StatelessWidget {
         ),
       ),
       child: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: ColorCodes.primaryColor,
         elevation: 0,
         scrolledUnderElevation: 0.0,
         centerTitle: isCenterTitle,
@@ -65,33 +65,35 @@ class CommonAppBar extends StatelessWidget {
             Row(
               children: [
                 HorizontalGapWidget(AppPaddings.p16.w),
-                Material(
-                  borderRadius: BorderRadius.all(Radius.circular(5.r)),
-                  color: Colors.transparent,
-                  child: InkWell(
+                SizedBox(
+                  width: 40.w,
+                  child: Material(
                     borderRadius: BorderRadius.all(Radius.circular(5.r)),
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) {
-                            return const BottomNavigationView();
-                          },
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            return SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(-1.0, 0.0),
-                                end: Offset.zero,
-                              ).animate(animation),
-                              child: child,
-                            );
-                          },
-                        ),
-                        (route) => false,
-                      );
-                    },
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(5.r)),
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return const BottomNavigationView();
+                            },
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(-1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              );
+                            },
+                          ),
+                              (route) => false,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],

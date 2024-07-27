@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/features/chat_bot/chat_bot_view.dart';
 import 'package:hr_app/features/contact/reach_hr_view.dart';
-import 'package:hr_app/features/home/home_view.dart';
+import 'package:hr_app/features/home/presentation/screens/home_view.dart';
 import 'package:hr_app/features/profile/profile_screen.dart';
 
 import '../../core/constants/color_codes.dart';
@@ -47,14 +47,16 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
       pageBody: _screens[BottomNavigationView._selectedIndex],
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
+          color: ColorCodes.primaryColor,
           border: Border(
             top: BorderSide(
-              color: Colors.grey,
+              color: ColorCodes.primaryColor,
               width: 1.0,
             ),
           ),
         ),
         child: BottomNavigationBar(
+          backgroundColor: ColorCodes.primaryColor,
           elevation: 0,
           currentIndex: BottomNavigationView._selectedIndex,
           selectedItemColor: ColorCodes.blackColor,
@@ -66,12 +68,25 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.dashboard_customize_outlined,
+                Icons.home,
                 size: 32.w,
-                color: ColorCodes.lightGreyColor,
+                color: ColorCodes.whiteColor.withOpacity(0.5),
               ),
               activeIcon: Icon(
-                Icons.dashboard_customize,
+                Icons.home,
+                size: 32.w,
+                color: ColorCodes.whiteColor,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.call_missed_outgoing,
+                size: 32.w,
+                color: ColorCodes.whiteColor.withOpacity(0.5),
+              ),
+              activeIcon: Icon(
+                Icons.call_missed_outgoing,
                 size: 32.w,
                 color: Colors.teal,
               ),
@@ -79,40 +94,27 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.mail_outline,
+                Icons.rocket_launch,
                 size: 32.w,
-                color: ColorCodes.lightGreyColor,
+                color: ColorCodes.whiteColor.withOpacity(0.5),
               ),
               activeIcon: Icon(
-                Icons.mail,
+                Icons.rocket_launch,
                 size: 32.w,
-                color: Colors.teal,
+                color: ColorCodes.whiteColor,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.movie_outlined,
+                Icons.person_2_rounded,
                 size: 32.w,
-                color: ColorCodes.lightGreyColor,
-              ),
-              activeIcon: Icon(
-                Icons.movie,
-                size: 32.w,
-                color: Colors.teal,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_2_outlined,
-                size: 32.w,
-                color: ColorCodes.lightGreyColor,
+                color: ColorCodes.whiteColor.withOpacity(0.5),
               ),
               activeIcon: Icon(
                 Icons.person_2_rounded,
                 size: 32.w,
-                color: Colors.teal,
+                color: ColorCodes.whiteColor,
               ),
               label: '',
             ),

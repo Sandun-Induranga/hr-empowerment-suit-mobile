@@ -28,7 +28,7 @@ class CommonBackButtonWidget extends StatelessWidget {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Row(
+          child: const Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

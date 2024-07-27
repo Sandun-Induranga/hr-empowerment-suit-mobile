@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 
-import '../../core/constants/app_paddings.dart';
-import '../../core/constants/color_codes.dart';
-import '../../core/widgets/common_page_widgets/common_app_bar.dart';
+import '../../../core/constants/app_paddings.dart';
+import '../../../core/constants/color_codes.dart';
+import '../../../core/widgets/common_page_widgets/common_app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -171,7 +171,13 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.rocket_launch),
+                      icon: Container(
+                        padding: EdgeInsets.all(8.r),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorCodes.primaryColor.withOpacity(0.2),
+                        ),
+                          child: const Icon(Icons.rocket_launch)),
                       color: ColorCodes.primaryColor,
                       onPressed: _sendMessage,
                     ),

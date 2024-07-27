@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'features/navigation/bottom_navigator_view.dart';
+import 'package:hr_app/features/home/presentation/screens/splash_view.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -25,7 +24,7 @@ class MainApp extends StatelessWidget {
           // darkTheme: AppThemeData.darkThemeData(),
         );
       },
-      child: const BottomNavigationView(),
+      child: const SplashView(),
     );
   }
 }

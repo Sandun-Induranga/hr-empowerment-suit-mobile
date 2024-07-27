@@ -24,7 +24,7 @@ class CommonPageBoilerPlate extends StatelessWidget {
     this.horizontalPadding = AppPaddings.p16,
     this.appBarPreferredSize = 44,
     this.isNeedToApplySafeArea = true,
-    this.bottomNavigationBar, // Add bottomNavigationBar here
+    this.bottomNavigationBar,
   });
 
   /// Optional widget to be displayed as page body.

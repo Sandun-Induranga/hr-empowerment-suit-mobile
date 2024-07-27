@@ -41,6 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            VerticalGapWidget(AppPaddings.p20.h),
             const Text(
               'Attendance (Last 5 Days)',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -93,11 +94,6 @@ class HomeScreenState extends State<HomeScreen> {
               status: 'Delayed',
               role: 'Designer',
               startDate: '2022-12-25',
-            ),
-            VerticalGapWidget(AppPaddings.p20.h),
-            const Text(
-              'Salary',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),

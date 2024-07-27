@@ -6,7 +6,7 @@ import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:intl/intl.dart';
 
-import '../../core/constants/color_codes.dart';
+import '../../../core/constants/color_codes.dart';
 
 class ReachHRScreen extends StatefulWidget {
   const ReachHRScreen({super.key});

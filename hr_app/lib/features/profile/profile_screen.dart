@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/core/constants/app_paddings.dart';
+import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
+import 'package:hr_app/core/widgets/gap_widgets/horizontal_gap_consistent.dart';
+import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:intl/intl.dart';
+
+import '../../core/constants/color_codes.dart';
+import '../../core/widgets/common_page_widgets/common_app_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -109,56 +117,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: Colors.teal,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: _editProfile,
-          ),
-        ],
+    return CommonPageBoilerPlate(
+      isNeedToApplySafeArea: false,
+      appBarPreferredSize: 80.h,
+      commonAppBar: CommonAppBar(
+        titleWidget: const Text('Profile', style: TextStyle(fontSize: 24)),
+        leadingWidget: Icon(
+          Icons.person_2_rounded,
+          size: 40.r,
+          color: ColorCodes.whiteColor,
+        ),
+        actionWidget: IconButton(
+          icon: const Icon(Icons.settings_rounded),
+          onPressed: _editProfile,
+          color: ColorCodes.whiteColor,
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/150'), // Placeholder image
-              ),
-              const SizedBox(height: 16),
-              Text(
-                name,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                email,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              const SizedBox(height: 16),
-              const Divider(),
-              _buildProfileItem('Phone', phone),
-              _buildProfileItem('Address', address),
-              _buildProfileItem('Birthday', DateFormat('yyyy-MM-dd').format(birthday)),
-              _buildProfileItem('Join Date', DateFormat('yyyy-MM-dd').format(joinDate)),
-              _buildProfileItem('Position', position),
-              _buildProfileItem('Salary', '\$${salary.toStringAsFixed(2)}'),
-              _buildProfileItem('Status', status),
-              const Divider(),
-              const SizedBox(height: 16),
-              const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque arcu id neque congue, in pharetra ex condimentum.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
+      pageBody: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            VerticalGapWidget(AppPaddings.p16.h),
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                  'https://via.placeholder.com/150'), // Placeholder image
+            ),
+            VerticalGapWidget(AppPaddings.p16.h),
+            Text(
+              name,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            VerticalGapWidget(AppPaddings.p8.h),
+            Text(
+              email,
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            VerticalGapWidget(AppPaddings.p16.h),
+            const Divider(),
+            _buildProfileItem('Phone', phone),
+            _buildProfileItem('Address', address),
+            _buildProfileItem(
+                'Birthday', DateFormat('yyyy-MM-dd').format(birthday)),
+            _buildProfileItem(
+                'Join Date', DateFormat('yyyy-MM-dd').format(joinDate)),
+            _buildProfileItem('Position', position),
+            _buildProfileItem('Salary', '\$${salary.toStringAsFixed(2)}'),
+            _buildProfileItem('Status', status),
+            const Divider(),
+            VerticalGapWidget(AppPaddings.p16.h),
+            const Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque arcu id neque congue, in pharetra ex condimentum.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       ),
     );
@@ -173,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             '$title: ',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          const SizedBox(width: 8),
+          HorizontalGapWidget(AppPaddings.p16.w),
           Expanded(
             child: Text(
               value,

@@ -61,43 +61,6 @@ class CommonAppBar extends StatelessWidget {
         ),
         actions: [
           if (actionWidget != null) actionWidget!,
-          if (isHomeRedirectEnable)
-            Row(
-              children: [
-                HorizontalGapWidget(AppPaddings.p16.w),
-                SizedBox(
-                  width: 40.w,
-                  child: Material(
-                    borderRadius: BorderRadius.all(Radius.circular(5.r)),
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.all(Radius.circular(5.r)),
-                      onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return const BottomNavigationView();
-                            },
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(-1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: child,
-                              );
-                            },
-                          ),
-                              (route) => false,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
           HorizontalGapWidget(AppPaddings.p8.w),
         ],
       ),

@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
+
+import '../../core/constants/app_paddings.dart';
+import '../../core/constants/color_codes.dart';
+import '../../core/widgets/common_page_widgets/common_app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -31,8 +38,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 16),
     )..addListener(() {
-      _updateRaindrops();
-    });
+        _updateRaindrops();
+      });
     _rainAnimationController.repeat();
 
     _colorChangeTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -98,12 +105,18 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       _isRaindropsGenerated = true;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chatbot UI'),
-        backgroundColor: Colors.teal,
+    return CommonPageBoilerPlate(
+      isNeedToApplySafeArea: false,
+      appBarPreferredSize: 80.h,
+      commonAppBar: CommonAppBar(
+        titleWidget: const Text('Fun Zone', style: TextStyle(fontSize: 24)),
+        leadingWidget: Icon(
+          Icons.rocket_launch,
+          size: 40.r,
+          color: ColorCodes.whiteColor,
+        ),
       ),
-      body: Stack(
+      pageBody: Stack(
         children: [
           CustomPaint(
             painter: RainPainter(_raindrops, screenHeight, _currentColor),
@@ -128,21 +141,38 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
                         controller: _controller,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          hintText: 'Type a message',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: AppPaddings.p12.w,
+                            vertical: 0,
+                          ),
+                          constraints: BoxConstraints(
+                            minHeight: 50.h,
                           ),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: ColorCodes.primaryColor.withOpacity(0.2),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50.r),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter number of days';
+                          } else if (int.tryParse(value) == null ||
+                              int.tryParse(value)! <= 0) {
+                            return 'Please enter a valid number of days';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.send),
-                      color: Colors.teal,
+                      icon: const Icon(Icons.rocket_launch),
+                      color: ColorCodes.primaryColor,
                       onPressed: _sendMessage,
                     ),
                   ],
@@ -162,6 +192,7 @@ class ChatBubble extends StatelessWidget {
   final AnimationController animationController;
 
   const ChatBubble({
+    super.key,
     required this.message,
     required this.isUser,
     required this.animationController,
@@ -183,10 +214,12 @@ class ChatBubble extends StatelessWidget {
           decoration: BoxDecoration(
             color: isUser ? Colors.deepPurple : Colors.grey[300],
             borderRadius: BorderRadius.only(
-              topLeft: isUser ? const Radius.circular(10) : const Radius.circular(0),
+              topLeft:
+                  isUser ? const Radius.circular(10) : const Radius.circular(0),
               topRight: const Radius.circular(10),
               bottomLeft: const Radius.circular(10),
-              bottomRight: isUser ? const Radius.circular(0) : const Radius.circular(10),
+              bottomRight:
+                  isUser ? const Radius.circular(0) : const Radius.circular(10),
             ),
           ),
           child: Text(

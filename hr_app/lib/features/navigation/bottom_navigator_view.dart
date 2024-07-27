@@ -50,7 +50,7 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
           color: ColorCodes.primaryColor,
           border: Border(
             top: BorderSide(
-              color: ColorCodes.primaryColor,
+              color: ColorCodes.whiteColor,
               width: 1.0,
             ),
           ),
@@ -88,7 +88,7 @@ class BottomNavigationViewState extends State<BottomNavigationView> {
               activeIcon: Icon(
                 Icons.call_missed_outgoing,
                 size: 32.w,
-                color: Colors.teal,
+                color: ColorCodes.whiteColor,
               ),
               label: '',
             ),

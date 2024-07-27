@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/core/constants/app_paddings.dart';
 import 'package:hr_app/core/constants/color_codes.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_app_bar.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
+import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:hr_app/features/home/presentation/widgets/attendance_indicator.dart';
 import 'package:hr_app/features/home/presentation/widgets/project_card.dart';
 
@@ -43,7 +45,7 @@ class HomeScreenState extends State<HomeScreen> {
               'Attendance (Last 5 Days)',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            VerticalGapWidget(AppPaddings.p12.h),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,13 +56,13 @@ class HomeScreenState extends State<HomeScreen> {
                 AttendanceIndicator(status: 'Present', color: ColorCodes.greenColor),
               ],
             ),
-            const SizedBox(height: 20),
+            VerticalGapWidget(AppPaddings.p20.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Online Status: ${isOnline ? 'Online' : 'Offline'}',
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18.sp),
                 ),
                 ElevatedButton(
                   onPressed: _toggleOnlineStatus,
@@ -68,12 +70,12 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            VerticalGapWidget(AppPaddings.p20.h),
             const Text(
               'Projects',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            VerticalGapWidget(AppPaddings.p12.h),
             const ProjectCard(
               name: 'Project A',
               status: 'In Progress',
@@ -92,15 +94,10 @@ class HomeScreenState extends State<HomeScreen> {
               role: 'Designer',
               startDate: '2022-12-25',
             ),
-            const SizedBox(height: 20),
+            VerticalGapWidget(AppPaddings.p20.h),
             const Text(
               'Salary',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'LKR 120,000.00',
-              style: TextStyle(fontSize: 18),
             ),
           ],
         ),

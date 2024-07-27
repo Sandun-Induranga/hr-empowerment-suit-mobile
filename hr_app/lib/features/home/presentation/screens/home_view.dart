@@ -68,15 +68,11 @@ class HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            Wrap(
-              children: [
-                _buildProjectCard(
-                    'Project A', 'In Progress', 'Developer', '2024-01-01'),
-                _buildProjectCard(
-                    'Project B', 'Completed', 'Lead Developer', '2023-06-15'),
-                _buildProjectCard('Project C', 'Pending', 'Tester', '2024-05-10'),
-              ],
-            ),
+            _buildProjectCard(
+                'Project A', 'In Progress', 'Developer', '2024-01-01'),
+            _buildProjectCard(
+                'Project B', 'Completed', 'Lead Developer', '2023-06-15'),
+            _buildProjectCard('Project C', 'Pending', 'Tester', '2024-05-10'),
             const SizedBox(height: 20),
             const Text(
               'Salary',
@@ -97,7 +93,6 @@ class HomeScreenState extends State<HomeScreen> {
       String name, String status, String role, String startDate) {
     return Container(
       color: ColorCodes.primaryColor.withOpacity(0.1),
-      width: 200.w,
       child: ListTile(
         title: Text(name),
         subtitle: Column(

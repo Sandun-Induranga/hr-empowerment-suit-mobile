@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hr_app/features/login/login_view.dart';
-
 import '../../../../core/constants/color_codes.dart';
-import '../../../navigation/bottom_navigator_view.dart';
+import '../../../authentication/presentation/screens/login_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

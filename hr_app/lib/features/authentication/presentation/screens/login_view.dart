@@ -5,8 +5,8 @@ import 'package:hr_app/core/constants/color_codes.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 
-import '../../core/widgets/common_page_widgets/common_app_bar.dart';
-import '../navigation/bottom_navigator_view.dart';
+import '../../../../core/widgets/common_page_widgets/common_app_bar.dart';
+import '../../../navigation/bottom_navigator_view.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

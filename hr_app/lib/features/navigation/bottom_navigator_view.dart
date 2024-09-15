@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hr_app/features/chat_bot/presentation/chat_bot_view.dart';
+import 'package:hr_app/features/chat_bot/presentation/screens/chat_bot_view.dart';
 import 'package:hr_app/features/contact/presentation/reach_hr_view.dart';
 import 'package:hr_app/features/home/presentation/screens/home_view.dart';
 import 'package:hr_app/features/profile/profile_screen.dart';

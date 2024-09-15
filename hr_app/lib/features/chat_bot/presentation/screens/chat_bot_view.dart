@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
+import 'package:hr_app/features/chat_bot/presentation/screens/game_view.dart';
+import 'package:http/http.dart' as http;
 
-import '../../../core/constants/app_paddings.dart';
-import '../../../core/constants/color_codes.dart';
-import '../../../core/widgets/common_page_widgets/common_app_bar.dart';
+import '../../../../core/constants/app_paddings.dart';
+import '../../../../core/constants/color_codes.dart';
+import '../../../../core/widgets/common_page_widgets/common_app_bar.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -85,12 +88,46 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_controller.text.isEmpty) return;
     setState(() {
       _messages.add({'text': _controller.text, 'sender': 'user'});
-      _messages.add({'text': 'Echo: ${_controller.text}', 'sender': 'bot'});
     });
+
+    try {
+      final response = await http
+          .post(
+            Uri.parse('http://192.168.8.105:8000/chat/'),
+            // Update this URL if it's hosted elsewhere
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'msg': _controller.text,
+            }),
+          )
+          .timeout(const Duration(seconds: 5));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final reply = jsonDecode(response.body)['reply'];
+        setState(() {
+          _messages.add({'text': 'Bot: $reply', 'sender': 'bot'});
+        });
+      } else {
+        print('Failed to send message');
+      }
+    } on TimeoutException catch (e) {
+      // Handle timeout exception
+      setState(() {
+        _messages.add({
+          'text': 'Error: Request timed out. Please try again.',
+          'sender': 'bot'
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+
     _controller.clear();
     _animationController.forward(from: 0.0);
   }
@@ -172,16 +209,30 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     ),
                     IconButton(
                       icon: Container(
-                        padding: EdgeInsets.all(8.r),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ColorCodes.primaryColor.withOpacity(0.2),
-                        ),
+                          padding: EdgeInsets.all(8.r),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorCodes.primaryColor.withOpacity(0.2),
+                          ),
                           child: const Icon(Icons.rocket_launch)),
                       color: ColorCodes.primaryColor,
                       onPressed: _sendMessage,
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameView(),
+                      ),
+                    );
+                  },
+                  child: const Text('Play Game'),
                 ),
               ),
             ],

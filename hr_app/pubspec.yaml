@@ -41,6 +41,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_spinkit: ^5.2.1
   intl: ^0.19.0
+  http: ^1.2.2
+  audioplayers: ^6.1.0
+  webview_flutter: ^4.9.0
+  flutter_inappwebview: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +71,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/sounds/
 
   fonts:
     - family: Inter

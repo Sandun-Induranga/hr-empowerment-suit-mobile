@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class GameView extends StatefulWidget {
-  const GameView({super.key});
+  const GameView({
+    super.key,
+    required this.url,
+    required this.title,
+  });
+
+  final String url;
+  final String title;
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -43,10 +50,8 @@ class _GameViewState extends State<GameView> {
               })
         ],
         settings: ContextMenuSettings(hideDefaultSystemContextMenuItems: false),
-        onCreateContextMenu: (hitTestResult) async {
-        },
-        onHideContextMenu: () {
-        },
+        onCreateContextMenu: (hitTestResult) async {},
+        onHideContextMenu: () {},
         onContextMenuActionItemClicked: (contextMenuItemClicked) async {
           var id = contextMenuItemClicked.id;
         });
@@ -80,7 +85,7 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Games")),
+        appBar: AppBar(title: Text(widget.title)),
         body: SafeArea(
             child: Column(children: <Widget>[
           Expanded(
@@ -88,8 +93,7 @@ class _GameViewState extends State<GameView> {
               children: [
                 InAppWebView(
                   key: webViewKey,
-                  initialUrlRequest: URLRequest(
-                      url: WebUri('https://www.jopi.com/gam/summer-maze/')),
+                  initialUrlRequest: URLRequest(url: WebUri(widget.url)),
                   initialSettings: settings,
                   contextMenu: contextMenu,
                   pullToRefreshController: pullToRefreshController,
@@ -157,8 +161,7 @@ class _GameViewState extends State<GameView> {
                       urlController.text = this.url;
                     });
                   },
-                  onConsoleMessage: (controller, consoleMessage) {
-                  },
+                  onConsoleMessage: (controller, consoleMessage) {},
                 ),
                 progress < 1.0
                     ? LinearProgressIndicator(value: progress)

@@ -98,7 +98,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       final response = await http
           .post(
             Uri.parse('http://192.168.8.105:8000/chat/'),
-            // Update this URL if it's hosted elsewhere
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -228,7 +227,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const GameView(),
+                        builder: (context) => const GameView(
+                          title: 'Summer Maze',
+                          url: 'https://www.jopi.com/gam/summer-maze/',
+                        ),
                       ),
                     );
                   },

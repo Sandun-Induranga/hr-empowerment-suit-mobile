@@ -7,6 +7,7 @@ import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/color_codes.dart';
+import '../../chat_bot/presentation/screens/game_view.dart';
 
 class ReachHRScreen extends StatefulWidget {
   const ReachHRScreen({super.key});
@@ -284,6 +285,45 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                           ),
                           const Icon(
                             Icons.label_important,
+                            color: ColorCodes.whiteColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  VerticalGapWidget(AppPaddings.p20.h),
+                  ElevatedButton(
+                    onPressed: () {
+                      Uri uri =
+                          Uri.https('form.jotform.com', '/242603610622445');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const GameView(
+                              title: 'Feedback Form',
+                              url: 'https://form.jotform.com/242603610622445'),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorCodes.primaryColor.withOpacity(0.8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: SizedBox(
+                      height: 50.h,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Submit Feedback',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              color: ColorCodes.whiteColor,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.feedback,
                             color: ColorCodes.whiteColor,
                           ),
                         ],

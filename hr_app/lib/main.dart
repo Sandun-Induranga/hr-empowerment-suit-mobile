@@ -16,5 +16,5 @@ Future main() async {
     await localhostServer.start();
   }
 
-  runApp(MainApp());
+  runApp(const MainApp());
 }

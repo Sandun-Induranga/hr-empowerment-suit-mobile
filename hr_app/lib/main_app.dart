@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_app/features/authentication/bloc/auth_provider.dart';
 import 'package:hr_app/features/home/presentation/screens/splash_view.dart';
 
 class MainApp extends StatelessWidget {
@@ -12,16 +14,21 @@ class MainApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
-          // localizationsDelegates: const [
-          //   AppLocalizations.delegate,
-          //   CountryLocalizations.delegate,
-          // ],            supportedLocales: AppLocalizations.supportedLocales,
-          debugShowCheckedModeBanner: false,
-          home: child,
-          // routes: AppRoutes.routes,
-          // theme: AppThemeData.lightThemeData(),
-          // darkTheme: AppThemeData.darkThemeData(),
+        return MultiBlocProvider(
+          providers: [
+            AuthProvider(),
+          ],
+          child: MaterialApp(
+            // localizationsDelegates: const [
+            //   AppLocalizations.delegate,
+            //   CountryLocalizations.delegate,
+            // ],            supportedLocales: AppLocalizations.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            home: child,
+            // routes: AppRoutes.routes,
+            // theme: AppThemeData.lightThemeData(),
+            // darkTheme: AppThemeData.darkThemeData(),
+          ),
         );
       },
       child: const SplashView(),

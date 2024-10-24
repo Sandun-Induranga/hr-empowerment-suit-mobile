@@ -45,6 +45,7 @@ dependencies:
   audioplayers: ^6.1.0
   flutter_inappwebview: ^6.0.0
   shared_preferences: ^2.3.2
+  flutter_bloc: ^8.1.6
 
 dev_dependencies:
   flutter_test:

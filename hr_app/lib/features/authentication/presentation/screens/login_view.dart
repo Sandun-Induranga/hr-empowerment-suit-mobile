@@ -142,6 +142,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/constants/app_paddings.dart';
 import 'package:hr_app/core/constants/color_codes.dart';
@@ -154,6 +155,8 @@ import 'dart:convert';
 
 import '../../../../core/widgets/common_page_widgets/common_app_bar.dart';
 import '../../../navigation/bottom_navigator_view.dart';
+import '../../bloc/auth_bloc.dart';
+import '../../bloc/auth_event.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -174,16 +177,28 @@ class LoginView extends StatelessWidget {
         'password': password,
       };
 
+      String? getEmployeeIdFromToken(String token) {
+        try {
+          final payloadBase64 = token.split('.')[1];
+          final normalizedBase64 = base64.normalize(payloadBase64);
+          final decodedPayload = utf8.decode(base64.decode(normalizedBase64));
+          final payloadMap = json.decode(decodedPayload);
+
+          return payloadMap['sub'] as String?;
+        } catch (e) {
+          // Handle decoding error
+          print('Token decoding error: $e');
+          return null;
+        }
+      }
+
       // Send the login request
       try {
         final response = await http.post(
-          Uri.parse('http://192.168.8.105:5000/auth/login'), // Replace with your actual backend URL
+          Uri.parse('http://192.168.8.105:5000/auth/login'),
           headers: {'Content-Type': 'application/json'},
-
           body: jsonEncode(requestBody),
-        ).timeout(Duration(seconds: 10), onTimeout: () {
-          throw Exception('Request timed out');
-        });
+        );
 
         if (response.statusCode == 201) {
           // Successful login
@@ -193,6 +208,7 @@ class LoginView extends StatelessWidget {
           // Store the token securely (e.g., using Flutter Secure Storage)
           // Navigate to the next screen
           SharedPreferencesService().setToken(accessToken);
+          context.read<AuthBloc>().add(SetEmployeeIdEvent(employeeId: getEmployeeIdFromToken(accessToken) ?? ''));
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -202,14 +218,13 @@ class LoginView extends StatelessWidget {
         } else {
           // Handle login failure
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login failed. Please try again.')),
+            const SnackBar(content: Text('Login failed. Please try again.')),
           );
         }
       } catch (e) {
         // Handle network error
-        print(e);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Network error. Please try again.')),
+          const SnackBar(content: Text('Network error. Please try again.')),
         );
       }
     }

@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/utils/shared_preferences_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../../../../core/constants/color_codes.dart';
+import '../../../authentication/bloc/auth_bloc.dart';
+import '../../../authentication/bloc/auth_event.dart';
 import '../../../authentication/presentation/screens/login_view.dart';
 import '../../../home/presentation/screens/home_view.dart';
 import '../../../navigation/bottom_navigator_view.dart';
@@ -85,6 +88,7 @@ class _SplashViewState extends State<SplashView> {
 
   // Navigate to HomeView with employee ID
   void _navigateToHome(String? employeeId) {
+    context.read<AuthBloc>().add(SetEmployeeIdEvent(employeeId: employeeId ?? ''));
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

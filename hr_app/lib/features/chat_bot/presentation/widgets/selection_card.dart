@@ -33,9 +33,16 @@ class SelectionCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset(asset, width: 1.sw, height: 150.h),
+            Image.asset(
+              asset,
+              width: 1.sw,
+              height: 150.h,
+            ),
             VerticalGapWidget(20.h),
-             Text(title, style: const TextStyle(fontSize: 20)),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 20),
+            ),
             VerticalGapWidget(20.h),
           ],
         ),

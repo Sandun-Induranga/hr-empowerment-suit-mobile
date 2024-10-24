@@ -7,3 +7,11 @@ class SetEmployeeIdEvent extends AuthEvent {
     required this.employeeId,
   });
 }
+
+class GetEmployeeByIdEvent extends AuthEvent {
+  final String employeeId;
+
+  GetEmployeeByIdEvent({
+    required this.employeeId,
+  });
+}

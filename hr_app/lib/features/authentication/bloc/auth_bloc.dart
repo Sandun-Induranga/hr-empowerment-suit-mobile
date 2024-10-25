@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.clone(
       employeeId: event.employeeId,
     ));
-    add(GetEmployeeByIdEvent(employeeId: event.employeeId));
+    add(GetEmployeeByIdEvent(employeeId: state.employeeId));
   }
 
   FutureOr<void> _getEmployeeById(GetEmployeeByIdEvent event, Emitter<AuthState> emit) async {

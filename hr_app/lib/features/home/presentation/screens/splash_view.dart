@@ -68,7 +68,7 @@ class _SplashViewState extends State<SplashView> {
       final decodedPayload = utf8.decode(base64.decode(normalizedBase64));
       final payloadMap = json.decode(decodedPayload);
 
-      return payloadMap['sub'] as String?;
+      return payloadMap['userId'] as String?;
     } catch (e) {
       // Handle decoding error
       print('Token decoding error: $e');

@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class AuthRepository{
-  Future<Map<String, dynamic>?> getEmployeeById(String id) async {
-    final String apiUrl = 'http://192.168.8.105:5000/employees/$id';
+import '../model/employee.dart';
+
+class AuthRepository {
+  Future<Employee?> getEmployeeById(String id) async {
+    final String apiUrl = 'http://192.168.8.105:5000/users/$id';
 
     try {
       final response = await http.get(
@@ -13,8 +15,7 @@ class AuthRepository{
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> employeeData = json.decode(response.body);
-        print('Employee data: $employeeData');
-        return employeeData;
+        return Employee.fromJson(employeeData);
       } else {
         print('Failed to load employee. Status code: ${response.statusCode}');
         return null;

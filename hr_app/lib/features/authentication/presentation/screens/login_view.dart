@@ -184,7 +184,7 @@ class LoginView extends StatelessWidget {
           final decodedPayload = utf8.decode(base64.decode(normalizedBase64));
           final payloadMap = json.decode(decodedPayload);
 
-          return payloadMap['sub'] as String?;
+          return payloadMap['userId'] as String?;
         } catch (e) {
           // Handle decoding error
           print('Token decoding error: $e');
@@ -207,7 +207,7 @@ class LoginView extends StatelessWidget {
 
           // Store the token securely (e.g., using Flutter Secure Storage)
           // Navigate to the next screen
-          SharedPreferencesService().setToken(accessToken);
+          await SharedPreferencesService().setToken(accessToken);
           context.read<AuthBloc>().add(SetEmployeeIdEvent(employeeId: getEmployeeIdFromToken(accessToken) ?? ''));
           Navigator.pushReplacement(
             context,

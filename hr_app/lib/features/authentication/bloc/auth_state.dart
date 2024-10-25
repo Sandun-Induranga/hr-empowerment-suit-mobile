@@ -1,8 +1,13 @@
+import 'package:hr_app/features/authentication/data/model/employee.dart';
+
 class AuthState {
   final String employeeId;
-  final Map<String, dynamic>? employee;
+  final Employee? employee;
 
-  AuthState({required this.employeeId, this.employee});
+  AuthState({
+    required this.employeeId,
+    this.employee,
+  });
 
   static AuthState initial() => AuthState(
         employeeId: '',
@@ -11,7 +16,7 @@ class AuthState {
 
   AuthState clone({
     String? employeeId,
-    Map<String, dynamic>? employee,
+    Employee? employee,
   }) {
     return AuthState(
       employeeId: employeeId ?? this.employeeId,

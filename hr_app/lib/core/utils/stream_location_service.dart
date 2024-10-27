@@ -3,18 +3,14 @@ import 'package:permission_handler/permission_handler.dart';
 
 class StreamLocationService {
   static const LocationSettings _locationSettings =
-  LocationSettings(distanceFilter: 1, timeLimit: const Duration(seconds: 5));
+  LocationSettings(distanceFilter: 1, timeLimit: Duration(minutes: 1));
   static bool _isLocationGranted = false;
 
   static  Stream<Position>? get onLocationChanged  {
-    // askLocationPermission();
-    // if (_isLocationGranted) {
+    askLocationPermission();
       print('Location permission granted');
       print('Location settings: $_locationSettings');
       return Geolocator.getPositionStream(locationSettings: _locationSettings);
-    // }
-    // print('Location permission not granted');
-    // return null;
   }
 
   static Future<bool> askLocationPermission() async {

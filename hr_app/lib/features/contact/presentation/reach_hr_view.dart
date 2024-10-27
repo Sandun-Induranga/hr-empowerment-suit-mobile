@@ -5,6 +5,7 @@ import 'package:hr_app/core/widgets/common_page_widgets/common_app_bar.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/color_codes.dart';
 import '../../chat_bot/presentation/screens/game_view.dart';
@@ -37,12 +38,25 @@ class ReachHRScreenState extends State<ReachHRScreen> {
     super.dispose();
   }
 
-  void _sendEmail() {
-    if (_formKey.currentState!.validate()) {
-      // Implement email sending logic here
-      print('Sending email to HR for $_selectedProject');
-      print('Subject: ${_subjectController.text}');
-      print('Message: ${_messageController.text}');
+  void _sendEmail() async {
+    final String subject = Uri.encodeComponent(_subjectController.text);
+    final String body = Uri.encodeComponent(_messageController.text);
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'hr@feathercodes.com',
+      queryParameters: {
+        'subject': subject,
+        'body': body,
+      },
+    );
+    try {
+      if (await canLaunch(emailLaunchUri.toString())) {
+        await launch(emailLaunchUri.toString());
+      } else {
+        throw 'Could not launch email';
+      }
+    } catch (e) {
+      print('Exception: $e');
     }
   }
 
@@ -146,23 +160,26 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    child: SizedBox(
-                      height: 50.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Send Message',
-                            style: TextStyle(
-                              fontSize: 16.sp,
+                    child: GestureDetector(
+                      onTap: _sendEmail,
+                      child: SizedBox(
+                        height: 50.h,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Send Message',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: ColorCodes.whiteColor,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.send,
                               color: ColorCodes.whiteColor,
                             ),
-                          ),
-                          const Icon(
-                            Icons.send,
-                            color: ColorCodes.whiteColor,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

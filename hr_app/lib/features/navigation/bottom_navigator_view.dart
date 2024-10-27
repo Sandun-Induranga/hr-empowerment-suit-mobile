@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/features/chat_bot/presentation/screens/chat_bot_view.dart';
 import 'package:hr_app/features/chat_bot/presentation/screens/fun_zone_view.dart';
@@ -7,7 +10,10 @@ import 'package:hr_app/features/home/presentation/screens/home_view.dart';
 import 'package:hr_app/features/profile/profile_screen.dart';
 
 import '../../core/constants/color_codes.dart';
+import '../../core/utils/stream_location_service.dart';
 import '../../core/widgets/common_page_widgets/common_page_boiler_plate.dart';
+import '../authentication/bloc/auth_bloc.dart';
+import '../authentication/bloc/auth_event.dart';
 
 class BottomNavigationView extends StatefulWidget {
   static int _selectedIndex = 0;
@@ -19,9 +25,19 @@ class BottomNavigationView extends StatefulWidget {
 }
 
 class BottomNavigationViewState extends State<BottomNavigationView> {
+  late StreamSubscription? locationStreamSubscription;
+
   @override
   void initState() {
     super.initState();
+    locationStreamSubscription =
+        StreamLocationService.onLocationChanged?.listen(
+      (position) async {
+        context.read<AuthBloc>().add(
+              UpdateCurrentLocation(position: position),
+            );
+      },
+    );
   }
 
   void _onItemTapped(int index) {

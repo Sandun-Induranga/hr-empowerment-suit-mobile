@@ -14,6 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>((event, emit) async => switch (event) {
           SetEmployeeIdEvent() => _setEmployeeId(event, emit),
           GetEmployeeByIdEvent() => _getEmployeeById(event, emit),
+    UpdateCurrentLocation() => _updateCurrentLocation(event, emit),
         });
   }
 
@@ -29,5 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.clone(
       employee: employee,
     ));
+  }
+
+  void _updateCurrentLocation(UpdateCurrentLocation event, Emitter<AuthState> emit) {
+    authRepository.setCurrentLocation(state.employeeId, event.position);
   }
 }

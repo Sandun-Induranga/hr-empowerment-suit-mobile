@@ -1,3 +1,5 @@
+import 'package:geolocator/geolocator.dart';
+
 sealed class AuthEvent {}
 
 class SetEmployeeIdEvent extends AuthEvent {
@@ -13,5 +15,13 @@ class GetEmployeeByIdEvent extends AuthEvent {
 
   GetEmployeeByIdEvent({
     required this.employeeId,
+  });
+}
+
+class UpdateCurrentLocation extends AuthEvent {
+  final Position position;
+
+  UpdateCurrentLocation({
+    required this.position,
   });
 }

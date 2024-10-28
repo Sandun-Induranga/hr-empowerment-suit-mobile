@@ -60,6 +60,22 @@ class FunZoneView extends StatelessWidget {
                 );
               },
             ),
+            VerticalGapWidget(AppPaddings.p16.h),
+            SelectionCard(
+              asset: Assets.bot,
+              title: 'Videos',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const GameView(
+                      title: 'Videos',
+                      url: 'https://www.youtube-nocookie.com/embed/bP9gMpl1gyQ?playlist=bP9gMpl1gyQ&autoplay=1&iv_load_policy=3&loop=1&start=',
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

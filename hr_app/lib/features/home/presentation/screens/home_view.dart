@@ -12,6 +12,7 @@ import 'package:hr_app/features/home/bloc/home_event.dart';
 import 'package:hr_app/features/home/bloc/home_state.dart';
 import 'package:hr_app/features/home/presentation/widgets/attendance_indicator.dart';
 import 'package:hr_app/features/home/presentation/widgets/project_card.dart';
+import 'package:intl/intl.dart';
 
 import '../../../authentication/bloc/auth_event.dart';
 
@@ -44,6 +45,12 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         );
 
+    context.read<HomeBloc>().add(
+          GetProjectsDataEvent(
+            userId: context.read<AuthBloc>().state.employeeId,
+          ),
+        );
+
     return CommonPageBoilerPlate(
       isNeedToApplySafeArea: false,
       appBarPreferredSize: 80.h,
@@ -56,17 +63,17 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       ),
       pageBody: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            VerticalGapWidget(AppPaddings.p20.h),
-            const Text(
-              'Attendance (Last 5 Days)',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            VerticalGapWidget(AppPaddings.p12.h),
-            BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-              return Row(
+        child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              VerticalGapWidget(AppPaddings.p20.h),
+              const Text(
+                'Attendance (Last 5 Days)',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              VerticalGapWidget(AppPaddings.p12.h),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   for (int i = 0; i < state.attendanceList.length; i++)
@@ -79,48 +86,37 @@ class HomeScreenState extends State<HomeScreen> {
                               : ColorCodes.redColor,
                     ),
                 ],
-              );
-            }),
-            VerticalGapWidget(AppPaddings.p20.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Online Status: ${isOnline ? 'Online' : 'Offline'}',
-                  style: TextStyle(fontSize: 18.sp),
+              ),
+              VerticalGapWidget(AppPaddings.p20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Online Status: ${isOnline ? 'Online' : 'Offline'}',
+                    style: TextStyle(fontSize: 18.sp),
+                  ),
+                  ElevatedButton(
+                    onPressed: _toggleOnlineStatus,
+                    child: Text(isOnline ? 'Clock Out' : 'Clock In'),
+                  ),
+                ],
+              ),
+              VerticalGapWidget(AppPaddings.p20.h),
+              const Text(
+                'Projects',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              VerticalGapWidget(AppPaddings.p12.h),
+              for(int i = 0; i < state.projectsList.length; i++)
+                ProjectCard(
+                  name: state.projectsList[i].name,
+                  status: state.projectsList[i].status,
+                  description: state.projectsList[i].description,
+                  startDate: DateFormat('dd-MM-yyyy').format(state.projectsList[i].createdAt),
                 ),
-                ElevatedButton(
-                  onPressed: _toggleOnlineStatus,
-                  child: Text(isOnline ? 'Clock Out' : 'Clock In'),
-                ),
-              ],
-            ),
-            VerticalGapWidget(AppPaddings.p20.h),
-            const Text(
-              'Projects',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            VerticalGapWidget(AppPaddings.p12.h),
-            const ProjectCard(
-              name: 'Project A',
-              status: 'In Progress',
-              role: 'Project Manager',
-              startDate: '2022-12-25',
-            ),
-            const ProjectCard(
-              name: 'Project B',
-              status: 'Completed',
-              role: 'Developer',
-              startDate: '2022-12-25',
-            ),
-            const ProjectCard(
-              name: 'Project C',
-              status: 'Delayed',
-              role: 'Designer',
-              startDate: '2022-12-25',
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ),
     );
   }

@@ -10,13 +10,13 @@ class ProjectCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.status,
-    required this.role,
+    required this.description,
     required this.startDate,
   });
 
   final String name;
   final String status;
-  final String role;
+  final String description;
   final String startDate;
 
   @override
@@ -62,7 +62,14 @@ class ProjectCard extends StatelessWidget {
                   ),
                 ),
                 VerticalGapWidget(AppPaddings.p8.h),
-                Text('Role: $role'),
+                SizedBox(
+                  width: 1.sw - 180.w,
+                  child: Text(
+                    'Description: $description',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 4,
+                  ),
+                ),
                 VerticalGapWidget(AppPaddings.p4.h),
                 Text('Start Date: $startDate'),
               ],
@@ -70,11 +77,11 @@ class ProjectCard extends StatelessWidget {
             Icon(
               Icons.pivot_table_chart_rounded,
               size: 50.r,
-                color: status == 'In Progress'
-                    ? ColorCodes.greenColor
-                    : status == 'Completed'
-                    ? ColorCodes.redColor
-                    : ColorCodes.yellowColor,
+              color: status == 'In Progress'
+                  ? ColorCodes.greenColor
+                  : status == 'Completed'
+                      ? ColorCodes.redColor
+                      : ColorCodes.yellowColor,
             ),
           ],
         ),

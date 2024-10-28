@@ -7,3 +7,11 @@ class GetAttendanceDataEvent extends HomeEvent {
     required this.userId,
   });
 }
+
+class GetProjectsDataEvent extends HomeEvent {
+  final String userId;
+
+  GetProjectsDataEvent({
+    required this.userId,
+  });
+}

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/constants/app_paddings.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_app_bar.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
+import 'package:hr_app/features/authentication/bloc/auth_bloc.dart';
+import 'package:hr_app/features/home/bloc/home_bloc.dart';
+import 'package:hr_app/features/home/bloc/home_event.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/color_codes.dart';
 import '../../chat_bot/presentation/screens/game_view.dart';
+import '../../home/data/model/leave_request.dart';
 
 class ReachHRScreen extends StatefulWidget {
   const ReachHRScreen({super.key});
@@ -62,12 +67,17 @@ class ReachHRScreenState extends State<ReachHRScreen> {
 
   void _submitLeaveRequest() {
     if (_leaveFormKey.currentState!.validate()) {
-      // Implement leave request submission logic here
-      print('Submitting leave request');
-      print('Start Date: ${DateFormat('yyyy-MM-dd').format(_startDate!)}');
-      print('Number of Days: $_numOfDays');
-      print('Reason: ${_reasonController.text}');
-      print('Status: $_status');
+      context.read<HomeBloc>().add(
+            RequestLeaveEvent(
+              leaveRequest: LeaveRequest(
+                date: _startDate!,
+                dayCount: _numOfDays!,
+                reason: _reasonController.text,
+                status: _status,
+                userId: context.read<AuthBloc>().state.employeeId,
+              ),
+            ),
+          );
     }
   }
 

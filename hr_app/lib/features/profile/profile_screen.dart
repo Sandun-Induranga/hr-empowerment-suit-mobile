@@ -47,14 +47,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _nameController.text = context.read<AuthBloc>().state.employee?.name ?? '';
-    _emailController.text = context.read<AuthBloc>().state.employee?.email ?? '';
-    _phoneController.text = context.read<AuthBloc>().state.employee?.mobile ?? '';
-    _addressController.text = context.read<AuthBloc>().state.employee?.address ?? '';
-    _birthdayController.text = DateFormat('yyyy-MM-dd').format(context.read<AuthBloc>().state.employee?.birthday ?? DateTime.now());
-    _joinDateController.text = DateFormat('yyyy-MM-dd').format(context.read<AuthBloc>().state.employee?.birthday ?? DateTime.now());
-    _positionController.text = context.read<AuthBloc>().state.employee?.position ?? '';
-    _salaryController.text = context.read<AuthBloc>().state.employee?.salary.toString() ?? '';
-    _statusController.text =  context.read<AuthBloc>().state.employee?.status ?? false ? 'Online' : 'Offline';
+    _emailController.text =
+        context.read<AuthBloc>().state.employee?.email ?? '';
+    _phoneController.text =
+        context.read<AuthBloc>().state.employee?.mobile ?? '';
+    _addressController.text =
+        context.read<AuthBloc>().state.employee?.address ?? '';
+    _birthdayController.text = DateFormat('yyyy-MM-dd').format(
+        context.read<AuthBloc>().state.employee?.birthday ?? DateTime.now());
+    _joinDateController.text = DateFormat('yyyy-MM-dd').format(
+        context.read<AuthBloc>().state.employee?.birthday ?? DateTime.now());
+    _positionController.text =
+        context.read<AuthBloc>().state.employee?.position ?? '';
+    _salaryController.text =
+        context.read<AuthBloc>().state.employee?.salary.toString() ?? '';
+    _statusController.text =
+        (context.read<AuthBloc>().state.employee?.status ?? '') == 'true'
+            ? 'Online'
+            : 'Offline';
   }
 
   void _updateProfile() {
@@ -140,48 +150,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       pageBody: SingleChildScrollView(
-        child: BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                VerticalGapWidget(AppPaddings.p16.h),
-                 CircleAvatar(
-                  radius: 50,
-                  backgroundImage: MemoryImage(const Base64Decoder().convert(state.employee?.picture ?? '')),
-                ),
-                VerticalGapWidget(AppPaddings.p16.h),
-                Text(
-                  state.employee?.name ?? '',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                VerticalGapWidget(AppPaddings.p8.h),
-                Text(
-                  state.employee?.email ?? '',
-                  style: const TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                VerticalGapWidget(AppPaddings.p16.h),
-                const Divider(),
-                _buildProfileItem('Phone', state.employee?.mobile ?? ''),
-                _buildProfileItem('Address', state.employee?.address ?? ''),
-                _buildProfileItem(
-                    'Birthday', DateFormat('yyyy-MM-dd').format(state.employee?.birthday ?? DateTime.now())),
-                _buildProfileItem(
-                    'Join Date', DateFormat('yyyy-MM-dd').format(state.employee?.birthday ?? DateTime.now())),
-                _buildProfileItem('Position', state.employee?.position ?? ''),
-                _buildProfileItem('Salary', '\$${state.employee?.salary.toStringAsFixed(2) ?? ''}'),
-                _buildProfileItem('Status', state.employee?.status ?? false ? 'Online' : 'Offline'),
-                const Divider(),
-                VerticalGapWidget(AppPaddings.p16.h),
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque arcu id neque congue, in pharetra ex condimentum.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            );
-          }
-        ),
+        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              VerticalGapWidget(AppPaddings.p16.h),
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: MemoryImage(const Base64Decoder()
+                    .convert(state.employee?.picture ?? '')),
+              ),
+              VerticalGapWidget(AppPaddings.p16.h),
+              Text(
+                state.employee?.name ?? '',
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              VerticalGapWidget(AppPaddings.p8.h),
+              Text(
+                state.employee?.email ?? '',
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              VerticalGapWidget(AppPaddings.p16.h),
+              const Divider(),
+              _buildProfileItem('Phone', state.employee?.mobile ?? ''),
+              _buildProfileItem('Address', state.employee?.address ?? ''),
+              _buildProfileItem(
+                  'Birthday',
+                  DateFormat('yyyy-MM-dd')
+                      .format(state.employee?.birthday ?? DateTime.now())),
+              _buildProfileItem(
+                  'Join Date',
+                  DateFormat('yyyy-MM-dd')
+                      .format(state.employee?.birthday ?? DateTime.now())),
+              _buildProfileItem('Position', state.employee?.position ?? ''),
+              _buildProfileItem('Salary',
+                  '\$${state.employee?.salary.toStringAsFixed(2) ?? ''}'),
+              _buildProfileItem(
+                  'Status',
+                  (state.employee?.status ?? '') == 'true'
+                      ? 'Online'
+                      : 'Offline'),
+              const Divider(),
+              VerticalGapWidget(AppPaddings.p16.h),
+              const Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque arcu id neque congue, in pharetra ex condimentum.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

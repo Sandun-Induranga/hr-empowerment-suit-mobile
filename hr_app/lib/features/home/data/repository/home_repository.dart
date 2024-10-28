@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:hr_app/features/home/data/model/attendance.dart';
+import 'package:hr_app/features/home/data/model/leave_request.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/project.dart';
@@ -46,6 +47,27 @@ class HomeRepository {
     } catch (e) {
       print('Error fetching projects: $e');
       return [];
+    }
+  }
+
+  Future<void> requestLeave(LeaveRequest leave) async {
+    const String apiUrl = 'http://192.168.8.105:5000/leaves';
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(leave.toJson()),
+      );
+
+      if (response.statusCode == 201) {
+        final data = json.decode(response.body);
+        print('Leave request successful');
+      } else {
+        print('Failed to create leave. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error creating leave: $e');
     }
   }
 }

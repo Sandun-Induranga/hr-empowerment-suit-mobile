@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Employee {
   final String id;
   final String employeeId;
@@ -11,7 +13,7 @@ class Employee {
   final String department;
   final double salary;
   final String gender;
-  final bool status;
+  final String status;
 
   Employee({
     required this.id,
@@ -43,7 +45,7 @@ class Employee {
       department: json['employee']['department'] ?? '',
       salary: (json['employee']['salary'] != null) ? json['employee']['salary'].toDouble() : 0.0,
       gender: json['employee']['gender'] ?? '',
-      status: json['employee']['status'] ?? false,
+      status: json['employee']['status'] ?? '',
     );
   }
 

@@ -13,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>((event, emit) async => switch (event) {
           GetAttendanceDataEvent() => _getAttendanceData(event, emit),
           GetProjectsDataEvent() => _getProjectsData(event, emit),
+          RequestLeaveEvent() => _requestLeave(event, emit),
         });
   }
 
@@ -32,5 +33,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.clone(
       projectsList: projects,
     ));
+  }
+
+  FutureOr<void> _requestLeave(
+      RequestLeaveEvent event, Emitter<HomeState> emit) async {
+    await homeRepository.requestLeave(event.leaveRequest);
   }
 }

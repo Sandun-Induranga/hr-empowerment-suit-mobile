@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _joinDateController.text = DateFormat('yyyy-MM-dd').format(context.read<AuthBloc>().state.employee?.birthday ?? DateTime.now());
     _positionController.text = context.read<AuthBloc>().state.employee?.position ?? '';
     _salaryController.text = context.read<AuthBloc>().state.employee?.salary.toString() ?? '';
-    _statusController.text = 'Active';
+    _statusController.text =  context.read<AuthBloc>().state.employee?.status ?? false ? 'Online' : 'Offline';
   }
 
   void _updateProfile() {
@@ -143,10 +146,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 VerticalGapWidget(AppPaddings.p16.h),
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(
-                      'https://via.placeholder.com/150'), // Placeholder image
+                  backgroundImage: MemoryImage(const Base64Decoder().convert(state.employee?.picture ?? '')),
                 ),
                 VerticalGapWidget(AppPaddings.p16.h),
                 Text(
@@ -167,8 +169,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildProfileItem(
                     'Join Date', DateFormat('yyyy-MM-dd').format(state.employee?.birthday ?? DateTime.now())),
                 _buildProfileItem('Position', state.employee?.position ?? ''),
-                _buildProfileItem('Salary', '\$${state.employee?.salary.toString() ?? ''}'),
-                _buildProfileItem('Status', 'Active'),
+                _buildProfileItem('Salary', '\$${state.employee?.salary.toStringAsFixed(2) ?? ''}'),
+                _buildProfileItem('Status', state.employee?.status ?? false ? 'Online' : 'Offline'),
                 const Divider(),
                 VerticalGapWidget(AppPaddings.p16.h),
                 const Text(

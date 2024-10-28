@@ -7,14 +7,14 @@ import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   final AuthRepository authRepository = AuthRepository();
 
   AuthBloc() : super(AuthState.initial()) {
     on<AuthEvent>((event, emit) async => switch (event) {
           SetEmployeeIdEvent() => _setEmployeeId(event, emit),
           GetEmployeeByIdEvent() => _getEmployeeById(event, emit),
-    UpdateCurrentLocation() => _updateCurrentLocation(event, emit),
+          UpdateCurrentLocation() => _updateCurrentLocation(event, emit),
+          UpdateStatus() => _updateStatus(event, emit),
         });
   }
 
@@ -25,14 +25,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     add(GetEmployeeByIdEvent(employeeId: state.employeeId));
   }
 
-  FutureOr<void> _getEmployeeById(GetEmployeeByIdEvent event, Emitter<AuthState> emit) async {
+  FutureOr<void> _getEmployeeById(
+      GetEmployeeByIdEvent event, Emitter<AuthState> emit) async {
     final employee = await authRepository.getEmployeeById(event.employeeId);
     emit(state.clone(
       employee: employee,
     ));
   }
 
-  void _updateCurrentLocation(UpdateCurrentLocation event, Emitter<AuthState> emit) {
+  void _updateCurrentLocation(
+      UpdateCurrentLocation event, Emitter<AuthState> emit) {
     authRepository.setCurrentLocation(state.employeeId, event.position);
+  }
+
+  FutureOr<void> _updateStatus(
+      UpdateStatus event, Emitter<AuthState> emit) async {
+    await authRepository.updateStatus(
+      state.employeeId,
+      event.status,
+    );
   }
 }

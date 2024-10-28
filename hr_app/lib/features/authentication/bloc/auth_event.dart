@@ -25,3 +25,11 @@ class UpdateCurrentLocation extends AuthEvent {
     required this.position,
   });
 }
+
+class UpdateStatus extends AuthEvent {
+  final bool status;
+
+  UpdateStatus({
+    required this.status,
+  });
+}

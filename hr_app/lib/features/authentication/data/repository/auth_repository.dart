@@ -45,7 +45,24 @@ class AuthRepository {
       print('Response status: ${response.statusCode}');
 
     } catch (e) {
-      print('Error fetching employee: $e');
+      print('Error updating employee: $e');
+      return null;
+    }
+  }
+
+  Future<void> updateStatus(String id, bool status) async {
+    final String apiUrl = 'http://192.168.8.105:5000/users/$id/status/$status';
+
+    try {
+      var response = await http.patch(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      print('Response status: ${response.statusCode}');
+
+    } catch (e) {
+      print('Error updating status: $e');
       return null;
     }
   }

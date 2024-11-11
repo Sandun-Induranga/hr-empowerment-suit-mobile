@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
-import 'package:hr_app/features/chat_bot/presentation/screens/game_view.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/constants/app_paddings.dart';
@@ -145,11 +144,22 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       isNeedToApplySafeArea: false,
       appBarPreferredSize: 80.h,
       commonAppBar: CommonAppBar(
-        titleWidget: const Text('Fun Zone', style: TextStyle(fontSize: 24)),
-        leadingWidget: Icon(
-          Icons.rocket_launch,
-          size: 40.r,
-          color: ColorCodes.whiteColor,
+        titleWidget: const Text(
+          'Chat Bot',
+          style: TextStyle(fontSize: 24),
+        ),
+        leadingWidget: IconButton(
+          icon: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: Icon(
+              Icons.arrow_back_ios,
+              size: 30.r,
+              color: ColorCodes.whiteColor,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       pageBody: Stack(
@@ -218,23 +228,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                       onPressed: _sendMessage,
                     ),
                   ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const GameView(
-                          title: 'Summer Maze',
-                          url: 'https://www.jopi.com/gam/summer-maze/',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text('Play Game'),
                 ),
               ),
             ],

@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/constants/app_paddings.dart';
+import 'package:hr_app/core/utils/shared_preferences_service.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/horizontal_gap_consistent.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:hr_app/features/authentication/bloc/auth_state.dart';
+import 'package:hr_app/features/authentication/presentation/screens/login_view.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/constants/color_codes.dart';
@@ -158,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               CircleAvatar(
                 radius: 50,
                 backgroundImage: MemoryImage(const Base64Decoder()
-                    .convert(state.employee?.picture ?? '')),
+                    .convert((state.employee?.picture ?? '').split(',')[1])),
               ),
               VerticalGapWidget(AppPaddings.p16.h),
               Text(
@@ -194,9 +196,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Divider(),
               VerticalGapWidget(AppPaddings.p16.h),
               const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque arcu id neque congue, in pharetra ex condimentum.',
+                'This is your details that you have provided to us.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
+              ),
+              VerticalGapWidget(AppPaddings.p16.h),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorCodes.whiteColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  side: const BorderSide(color: ColorCodes.primaryColor),
+                ),
+                onPressed: () async {
+                  var sharedPreferencesService = SharedPreferencesService();
+                  await sharedPreferencesService.setToken('');
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginView()),
+                      (route) => route.isFirst);
+                },
+                child: SizedBox(
+                  height: 40.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: ColorCodes.primaryColor,
+                        ),
+                      ),
+                      HorizontalGapWidget(10.w),
+                      const Icon(
+                        Icons.logout,
+                        color: ColorCodes.primaryColor,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           );

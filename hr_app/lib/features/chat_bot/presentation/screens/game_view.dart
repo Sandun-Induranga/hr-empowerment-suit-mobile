@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/constants/color_codes.dart';
 
 class GameView extends StatefulWidget {
   const GameView({
@@ -85,7 +88,24 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
+        appBar: AppBar(
+          toolbarHeight: 80.h,
+          backgroundColor: ColorCodes.primaryColor,
+          title: Text(widget.title, style: const TextStyle(fontSize: 24, color: ColorCodes.whiteColor)),
+          leading: IconButton(
+            icon: Padding(
+              padding: EdgeInsets.all(16.r),
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 30.r,
+                color: ColorCodes.whiteColor,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: SafeArea(
             child: Column(children: <Widget>[
           Expanded(

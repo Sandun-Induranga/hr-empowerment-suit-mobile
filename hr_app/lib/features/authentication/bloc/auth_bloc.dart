@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           GetEmployeeByIdEvent() => _getEmployeeById(event, emit),
           UpdateCurrentLocation() => _updateCurrentLocation(event, emit),
           UpdateStatus() => _updateStatus(event, emit),
+    LoginEvent() => _login(event, emit),
         });
   }
 
@@ -44,5 +45,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       state.employeeId,
       event.status,
     );
+  }
+
+  FutureOr<void> _login(
+      LoginEvent event, Emitter<AuthState> emit) async {
+    try{
+      emit(state.clone(
+        loginStatus: LoginStatus.submitting,
+      ));
+      await authRepository.login(event.email, event.password);
+      emit(state.clone(
+        loginStatus: LoginStatus.success,
+      ));
+    }catch (e){
+      emit(state.clone(
+        loginStatus: LoginStatus.error,
+      ));
+    }
   }
 }

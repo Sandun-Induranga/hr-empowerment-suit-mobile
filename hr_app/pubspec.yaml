@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.3.2
   flutter_bloc: ^8.1.6
   url_launcher: ^6.3.1
+  rflutter_alert: ^2.0.7
 
 dev_dependencies:
   flutter_test:

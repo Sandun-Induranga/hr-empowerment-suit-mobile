@@ -25,15 +25,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // String name = 'John Doe';
-  // String email = 'johndoe@example.com';
-  // String phone = '+1 234 567 890';
-  // String address = '123 Main Street, Springfield, USA';
-  // DateTime birthday = DateTime(1990, 1, 1);
-  // DateTime joinDate = DateTime(2020, 5, 1);
-  // String position = 'Software Engineer';
-  // double salary = 75000;
-  // String status = 'Active';
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -70,17 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _updateProfile() {
-    setState(() {
-      // name = _nameController.text;
-      // email = _emailController.text;
-      // phone = _phoneController.text;
-      // address = _addressController.text;
-      // birthday = DateFormat('yyyy-MM-dd').parse(_birthdayController.text);
-      // joinDate = DateFormat('yyyy-MM-dd').parse(_joinDateController.text);
-      // position = _positionController.text;
-      // salary = double.tryParse(_salaryController.text) ?? salary;
-      // status = _statusController.text;
-    });
     Navigator.of(context).pop();
   }
 
@@ -213,10 +193,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   var sharedPreferencesService = SharedPreferencesService();
                   await sharedPreferencesService.setToken('');
                   Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginView()),
-                      (route) => route.isFirst);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginView(),
+                    ),
+                    (route) => route.isFirst,
+                  );
                 },
                 child: SizedBox(
                   height: 40.h,

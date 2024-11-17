@@ -6,12 +6,16 @@ import 'package:hr_app/core/widgets/common_page_widgets/common_app_bar.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:hr_app/features/authentication/bloc/auth_bloc.dart';
+import 'package:hr_app/features/chat_bot/presentation/widgets/selection_card.dart';
 import 'package:hr_app/features/home/bloc/home_bloc.dart';
 import 'package:hr_app/features/home/bloc/home_event.dart';
+import 'package:hr_app/features/home/bloc/home_state.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/constants/color_codes.dart';
+import '../../../core/utils/assets.dart';
 import '../../chat_bot/presentation/screens/game_view.dart';
 import '../../home/data/model/leave_request.dart';
 
@@ -298,65 +302,95 @@ class ReachHRScreenState extends State<ReachHRScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    child: SizedBox(
-                      height: 50.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Submit Request',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color: ColorCodes.whiteColor,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.label_important,
-                            color: ColorCodes.whiteColor,
-                          ),
-                        ],
-                      ),
-                    ),
+                    child: BlocConsumer<HomeBloc, HomeState>(
+                      listenWhen: (current, previous) => current.requestStatus != previous.requestStatus,
+                        listener: (context, state) {
+                      if (state.requestStatus == RequestStatus.success) {
+                        Alert(
+                          context: context,
+                          type: AlertType.success,
+                          title: "SUCCESS",
+                          desc: "Request Submitted Successfully..!",
+                          buttons: [
+                            DialogButton(
+                              onPressed: () => Navigator.pop(context),
+                              width: 120.w,
+                              child: const Text(
+                                "COOL",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            )
+                          ],
+                        ).show();
+                        _reasonController.clear();
+                        _numOfDays = 0;
+                      } else if (state.requestStatus == RequestStatus.error) {
+                        Alert(
+                          context: context,
+                          type: AlertType.error,
+                          title: "REQUEST FAILED",
+                          desc: "Request Failed..! Please try again.",
+                          buttons: [
+                            DialogButton(
+                              onPressed: () => Navigator.pop(context),
+                              width: 120.w,
+                              child: const Text(
+                                "OK",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            )
+                          ],
+                        ).show();
+                      }
+                    }, builder: (context, state) {
+                      return SizedBox(
+                        height: 50.h,
+                        child: state.requestStatus == RequestStatus.submitting
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorCodes.whiteColor,
+                                ),
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Submit Request',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      color: ColorCodes.whiteColor,
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.label_important,
+                                    color: ColorCodes.whiteColor,
+                                  ),
+                                ],
+                              ),
+                      );
+                    }),
                   ),
                   VerticalGapWidget(AppPaddings.p20.h),
-                  ElevatedButton(
-                    onPressed: () {
-                      Uri uri =
-                          Uri.https('form.jotform.com', '/242603610622445');
+                  SelectionCard(
+                    asset: Assets.videos,
+                    title: 'Submit Feedback',
+                    onTap: () => {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const GameView(
-                              title: 'Feedback Form',
-                              url: 'https://form.jotform.com/242603610622445'),
+                            title: 'Feedback Form',
+                            url: 'https://form.jotform.com/242603610622445',
+                          ),
                         ),
-                      );
+                      ),
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorCodes.primaryColor.withOpacity(0.8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    child: SizedBox(
-                      height: 50.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Submit Feedback',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color: ColorCodes.whiteColor,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.feedback,
-                            color: ColorCodes.whiteColor,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
+                  VerticalGapWidget(AppPaddings.p20.h),
                 ],
               ),
             ),

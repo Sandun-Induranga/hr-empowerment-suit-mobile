@@ -37,6 +37,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _requestLeave(
       RequestLeaveEvent event, Emitter<HomeState> emit) async {
-    await homeRepository.requestLeave(event.leaveRequest);
+    try{
+      emit(state.clone(
+        requestStatus: RequestStatus.submitting,
+      ));
+      await homeRepository.requestLeave(event.leaveRequest);
+      emit(state.clone(
+        requestStatus: RequestStatus.success,
+      ));
+    }catch (e){
+      emit(state.clone(
+        requestStatus: RequestStatus.error,
+      ));
+    }
   }
 }

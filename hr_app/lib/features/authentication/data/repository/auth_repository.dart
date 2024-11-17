@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/utils/shared_preferences_service.dart';
 import '../model/employee.dart';
 
 class AuthRepository {
@@ -43,7 +44,6 @@ class AuthRepository {
       );
 
       print('Response status: ${response.statusCode}');
-
     } catch (e) {
       print('Error updating employee: $e');
       return null;
@@ -60,10 +60,44 @@ class AuthRepository {
       );
 
       print('Response status: ${response.statusCode}');
-
     } catch (e) {
       print('Error updating status: $e');
       return null;
+    }
+  }
+
+  Future<void> login(email, password) async {
+    // Prepare the login request body
+    final Map<String, String> requestBody = {
+      'email': email,
+      'password': password,
+    };
+
+    // Send the login request
+    final response = await http.post(
+      Uri.parse('http://192.168.8.105:5000/auth/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 201) {
+      // Successful login
+      final Map<String, dynamic> responseBody = json.decode(response.body);
+      final String accessToken = responseBody['access_token'];
+
+      // Store the token securely (e.g., using Flutter Secure Storage)
+      // Navigate to the next screen
+      await SharedPreferencesService().setToken(accessToken);
+      // context.read<AuthBloc>().add(SetEmployeeIdEvent(employeeId: getEmployeeIdFromToken(accessToken) ?? ''));
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const BottomNavigationView(),
+      //   ),
+      // );
+    } else {
+      // Handle login failure
+      throw Exception('Login Failed');
     }
   }
 }

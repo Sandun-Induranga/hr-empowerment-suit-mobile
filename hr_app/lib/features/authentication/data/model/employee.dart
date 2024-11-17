@@ -45,7 +45,7 @@ class Employee {
       department: json['employee']['department'] ?? '',
       salary: (json['employee']['salary'] != null) ? json['employee']['salary'].toDouble() : 0.0,
       gender: json['employee']['gender'] ?? '',
-      status: json['employee']['status'] ?? '',
+      status: (json['employee']['status'] ?? '').toString() == 'true' ? 'true' : 'false',
     );
   }
 

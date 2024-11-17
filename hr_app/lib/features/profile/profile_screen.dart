@@ -78,7 +78,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildTextField('Phone', _phoneController),
                 _buildTextField('Address', _addressController),
                 _buildTextField('Birthday (yyyy-MM-dd)', _birthdayController),
-                _buildTextField('Join Date (yyyy-MM-dd)', _joinDateController),
                 _buildTextField('Position', _positionController),
                 _buildTextField('Salary', _salaryController),
                 _buildTextField('Status', _statusController),
@@ -140,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               CircleAvatar(
                 radius: 50,
                 backgroundImage: MemoryImage(const Base64Decoder()
-                    .convert((state.employee?.picture ?? '').split(',')[1])),
+                    .convert((state.employee?.picture ?? '').split(',').length!= 2 ? state.employee?.picture ?? '' : (state.employee?.picture ?? '').split(',')[1])),
               ),
               VerticalGapWidget(AppPaddings.p16.h),
               Text(
@@ -159,10 +158,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildProfileItem('Address', state.employee?.address ?? ''),
               _buildProfileItem(
                   'Birthday',
-                  DateFormat('yyyy-MM-dd')
-                      .format(state.employee?.birthday ?? DateTime.now())),
-              _buildProfileItem(
-                  'Join Date',
                   DateFormat('yyyy-MM-dd')
                       .format(state.employee?.birthday ?? DateTime.now())),
               _buildProfileItem('Position', state.employee?.position ?? ''),

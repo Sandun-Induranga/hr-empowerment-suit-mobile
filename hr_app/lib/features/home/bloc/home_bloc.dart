@@ -21,8 +21,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       GetAttendanceDataEvent event, Emitter<HomeState> emit) async {
     final attendanceData = await homeRepository.getAttendanceData(event.userId);
 
+    final limitedAttendanceData = attendanceData.length > 5
+        ? attendanceData.sublist(0, 5)
+        : attendanceData;
+
     emit(state.clone(
-      attendanceList: attendanceData,
+      attendanceList: limitedAttendanceData,
     ));
   }
 

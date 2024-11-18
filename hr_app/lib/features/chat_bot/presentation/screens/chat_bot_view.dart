@@ -28,6 +28,17 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final Random _random = Random();
   bool _isRaindropsGenerated = false;
   Color _currentColor = Colors.blue;
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -92,6 +103,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _messages.add({'text': _controller.text, 'sender': 'user'});
     });
+    _scrollToBottom();
 
     try {
       final response = await http
@@ -111,6 +123,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         setState(() {
           _messages.add({'text': 'Bot: $reply', 'sender': 'bot'});
         });
+        _scrollToBottom();
       } else {
         print('Failed to send message');
       }
@@ -173,6 +186,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               Expanded(
                 child: ListView.builder(
                   itemCount: _messages.length,
+                  controller: _scrollController,
                   itemBuilder: (context, index) {
                     return ChatBubble(
                       message: _messages[index]['text']!,

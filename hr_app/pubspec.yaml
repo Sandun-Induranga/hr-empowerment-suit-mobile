@@ -48,6 +48,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   url_launcher: ^6.3.1
   rflutter_alert: ^2.0.7
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +60,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/icons/
 
   fonts:
     - family: Inter
@@ -112,3 +113,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_launcher_icons:
+  image_path: "assets/icons/icon.jpg"
+  android: true

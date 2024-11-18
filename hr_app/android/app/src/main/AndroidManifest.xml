@@ -42,7 +42,7 @@
     </queries>
 
     <application
-        android:label="hr_app"
+        android:label="HRES"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

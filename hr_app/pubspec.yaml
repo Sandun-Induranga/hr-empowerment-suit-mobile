@@ -114,5 +114,8 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_launcher_icons:
-  image_path: "assets/icons/icon.jpg"
   android: true
+  ios: true
+  image_path: "assets/icons/icon.png"
+  adaptive_icon_foreground: "assets/icons/icon.png"
+  adaptive_icon_background: "#3369FF"

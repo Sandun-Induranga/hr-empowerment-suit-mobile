@@ -31,6 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final employee = await authRepository.getEmployeeById(event.employeeId);
     emit(state.clone(
       employee: employee,
+      status: bool.parse(employee?.status ?? 'false')
     ));
   }
 
@@ -43,8 +44,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       UpdateStatus event, Emitter<AuthState> emit) async {
     await authRepository.updateStatus(
       state.employeeId,
-      event.status,
+      !state.status
     );
+    emit(state.clone(
+      status: !state.status,
+    ));
   }
 
   FutureOr<void> _login(

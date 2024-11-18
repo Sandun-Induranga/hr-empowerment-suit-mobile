@@ -25,7 +25,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -131,94 +130,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       pageBody: SingleChildScrollView(
-        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              VerticalGapWidget(AppPaddings.p16.h),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: MemoryImage(const Base64Decoder()
-                    .convert((state.employee?.picture ?? '').split(',').length!= 2 ? state.employee?.picture ?? '' : (state.employee?.picture ?? '').split(',')[1])),
-              ),
-              VerticalGapWidget(AppPaddings.p16.h),
-              Text(
-                state.employee?.name ?? '',
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              VerticalGapWidget(AppPaddings.p8.h),
-              Text(
-                state.employee?.email ?? '',
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              VerticalGapWidget(AppPaddings.p16.h),
-              const Divider(),
-              _buildProfileItem('Phone', state.employee?.mobile ?? ''),
-              _buildProfileItem('Address', state.employee?.address ?? ''),
-              _buildProfileItem(
-                  'Birthday',
-                  DateFormat('yyyy-MM-dd')
-                      .format(state.employee?.birthday ?? DateTime.now())),
-              _buildProfileItem('Position', state.employee?.position ?? ''),
-              _buildProfileItem('Salary',
-                  '\$${state.employee?.salary.toStringAsFixed(2) ?? ''}'),
-              _buildProfileItem(
-                  'Status',
-                  (state.employee?.status ?? '') == 'true'
-                      ? 'Online'
-                      : 'Offline'),
-              const Divider(),
-              VerticalGapWidget(AppPaddings.p16.h),
-              const Text(
-                'This is your details that you have provided to us.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
-              ),
-              VerticalGapWidget(AppPaddings.p16.h),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorCodes.whiteColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  side: const BorderSide(color: ColorCodes.primaryColor),
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                VerticalGapWidget(AppPaddings.p16.h),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: MemoryImage(const Base64Decoder().convert(
+                      (state.employee?.picture ?? '').split(',').length != 2
+                          ? state.employee?.picture ?? ''
+                          : (state.employee?.picture ?? '').split(',')[1])),
                 ),
-                onPressed: () async {
-                  var sharedPreferencesService = SharedPreferencesService();
-                  await sharedPreferencesService.setToken('');
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginView(),
+                VerticalGapWidget(AppPaddings.p16.h),
+                Text(
+                  state.employee?.name ?? '',
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                VerticalGapWidget(AppPaddings.p8.h),
+                Text(
+                  state.employee?.email ?? '',
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                VerticalGapWidget(AppPaddings.p16.h),
+                const Divider(),
+                _buildProfileItem('Phone', state.employee?.mobile ?? ''),
+                _buildProfileItem('Address', state.employee?.address ?? ''),
+                _buildProfileItem(
+                    'Birthday',
+                    DateFormat('yyyy-MM-dd')
+                        .format(state.employee?.birthday ?? DateTime.now())),
+                _buildProfileItem('Position', state.employee?.position ?? ''),
+                _buildProfileItem('Salary',
+                    '\$${state.employee?.salary.toStringAsFixed(2) ?? ''}'),
+                _buildProfileItem(
+                  'Status',
+                  (state.status ? 'Online' : 'Offline'),
+                ),
+                const Divider(),
+                VerticalGapWidget(AppPaddings.p16.h),
+                const Text(
+                  'This is your details that you have provided to us.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+                VerticalGapWidget(AppPaddings.p16.h),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorCodes.whiteColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    (route) => route.isFirst,
-                  );
-                },
-                child: SizedBox(
-                  height: 40.h,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Logout',
-                        style: TextStyle(
-                          fontSize: 16.sp,
+                    side: const BorderSide(color: ColorCodes.primaryColor),
+                  ),
+                  onPressed: () async {
+                    var sharedPreferencesService = SharedPreferencesService();
+                    await sharedPreferencesService.setToken('');
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginView(),
+                      ),
+                      (route) => route.isFirst,
+                    );
+                  },
+                  child: SizedBox(
+                    height: 40.h,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: ColorCodes.primaryColor,
+                          ),
+                        ),
+                        HorizontalGapWidget(10.w),
+                        const Icon(
+                          Icons.logout,
                           color: ColorCodes.primaryColor,
                         ),
-                      ),
-                      HorizontalGapWidget(10.w),
-                      const Icon(
-                        Icons.logout,
-                        color: ColorCodes.primaryColor,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -228,9 +230,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Text(
-            '$title: ',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          SizedBox(
+            width: 80.w,
+            child: Text(
+              '$title: ',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
           HorizontalGapWidget(AppPaddings.p16.w),
           Expanded(

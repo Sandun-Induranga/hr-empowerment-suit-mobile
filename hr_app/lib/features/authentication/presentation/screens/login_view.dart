@@ -168,7 +168,6 @@ class LoginView extends StatelessWidget {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    // Updated login function
     void login() async {
       context.read<AuthBloc>().add(
             LoginEvent(
@@ -176,65 +175,6 @@ class LoginView extends StatelessWidget {
               password: passwordController.text,
             ),
           );
-      // final String username = usernameController.text;
-      // final String password = passwordController.text;
-      //
-      // // Prepare the login request body
-      // final Map<String, String> requestBody = {
-      //   'email': username,
-      //   'password': password,
-      // };
-      //
-      // String? getEmployeeIdFromToken(String token) {
-      //   try {
-      //     final payloadBase64 = token.split('.')[1];
-      //     final normalizedBase64 = base64.normalize(payloadBase64);
-      //     final decodedPayload = utf8.decode(base64.decode(normalizedBase64));
-      //     final payloadMap = json.decode(decodedPayload);
-      //
-      //     return payloadMap['userId'] as String?;
-      //   } catch (e) {
-      //     // Handle decoding error
-      //     print('Token decoding error: $e');
-      //     return null;
-      //   }
-      // }
-      //
-      // // Send the login request
-      // try {
-      //   final response = await http.post(
-      //     Uri.parse('http://192.168.8.105:5000/auth/login'),
-      //     headers: {'Content-Type': 'application/json'},
-      //     body: jsonEncode(requestBody),
-      //   );
-      //
-      //   if (response.statusCode == 201) {
-      //     // Successful login
-      //     final Map<String, dynamic> responseBody = json.decode(response.body);
-      //     final String accessToken = responseBody['access_token'];
-      //
-      //     // Store the token securely (e.g., using Flutter Secure Storage)
-      //     // Navigate to the next screen
-      //     await SharedPreferencesService().setToken(accessToken);
-      //     context.read<AuthBloc>().add(SetEmployeeIdEvent(employeeId: getEmployeeIdFromToken(accessToken) ?? ''));
-      //     Navigator.pushReplacement(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => const BottomNavigationView(),
-      //       ),
-      //     );
-      //   } else {
-      //     // Handle login failure
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       const SnackBar(content: Text('Login failed. Please try again.')),
-      //     );
-      //   }
-      // } catch (e) {
-      //   // Handle network error
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(content: Text('Network error. Please try again.')),
-      //   );
-      // }
     }
 
     String? getEmployeeIdFromToken(String token) {

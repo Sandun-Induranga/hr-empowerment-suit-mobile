@@ -32,10 +32,12 @@ class _SplashViewState extends State<SplashView> {
 
     if (token == null || _isTokenExpired(token)) {
       // Token is missing or expired, navigate to login
+      await Future.delayed(const Duration(seconds: 5), (){});
       _navigateToLogin();
     } else {
       // Token is valid, navigate to home
       final employeeId = _getEmployeeIdFromToken(token);
+      await Future.delayed(const Duration(seconds: 5), (){});
       _navigateToHome(employeeId);
     }
   }

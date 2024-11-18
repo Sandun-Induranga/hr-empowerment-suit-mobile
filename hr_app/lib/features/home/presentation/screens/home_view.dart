@@ -7,6 +7,7 @@ import 'package:hr_app/core/widgets/common_page_widgets/common_app_bar.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:hr_app/core/widgets/gap_widgets/vertical_gap_consistent.dart';
 import 'package:hr_app/features/authentication/bloc/auth_bloc.dart';
+import 'package:hr_app/features/authentication/bloc/auth_state.dart';
 import 'package:hr_app/features/home/bloc/home_bloc.dart';
 import 'package:hr_app/features/home/bloc/home_event.dart';
 import 'package:hr_app/features/home/bloc/home_state.dart';
@@ -27,9 +28,6 @@ class HomeScreenState extends State<HomeScreen> {
   bool isOnline = false;
 
   void _toggleOnlineStatus() {
-    setState(() {
-      isOnline = !isOnline;
-    });
     context.read<AuthBloc>().add(
           UpdateStatus(
             status: isOnline,
@@ -88,18 +86,22 @@ class HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               VerticalGapWidget(AppPaddings.p20.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Online Status: ${isOnline ? 'Online' : 'Offline'}',
-                    style: TextStyle(fontSize: 18.sp),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleOnlineStatus,
-                    child: Text(isOnline ? 'Clock Out' : 'Clock In'),
-                  ),
-                ],
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Online Status: ${state.status ? 'Online' : 'Offline'}',
+                        style: TextStyle(fontSize: 18.sp),
+                      ),
+                      ElevatedButton(
+                        onPressed: _toggleOnlineStatus,
+                        child: Text(state.status ? 'Clock Out' : 'Clock In'),
+                      ),
+                    ],
+                  );
+                }
               ),
               VerticalGapWidget(AppPaddings.p20.h),
               const Text(

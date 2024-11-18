@@ -3,11 +3,12 @@ import 'package:hr_app/features/home/data/model/attendance.dart';
 import 'package:hr_app/features/home/data/model/leave_request.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/ApiConstants.dart';
 import '../model/project.dart';
 
 class HomeRepository {
   Future<List<Attendance>> getAttendanceData(String id) async {
-    final String apiUrl = 'http://192.168.8.105:5000/attendance/$id';
+    final String apiUrl = '$baseUrl/attendance/$id';
 
     try {
       final response = await http.get(
@@ -29,7 +30,7 @@ class HomeRepository {
   }
 
   Future<List<Project>> getProjectData(String id) async {
-    final String apiUrl = 'http://192.168.8.105:5000/projects/$id/users';
+    final String apiUrl = '$baseUrl/projects/$id/users';
 
     try {
       final response = await http.get(
@@ -51,7 +52,7 @@ class HomeRepository {
   }
 
   Future<void> requestLeave(LeaveRequest leave) async {
-    const String apiUrl = 'http://192.168.8.105:5000/leaves';
+    const String apiUrl = '$baseUrl/leaves';
 
     try {
       final response = await http.post(

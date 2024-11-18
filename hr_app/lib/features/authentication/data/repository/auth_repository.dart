@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
+import 'package:hr_app/core/constants/ApiConstants.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/utils/shared_preferences_service.dart';
@@ -7,7 +8,7 @@ import '../model/employee.dart';
 
 class AuthRepository {
   Future<Employee?> getEmployeeById(String id) async {
-    final String apiUrl = 'http://192.168.8.105:5000/users/$id';
+    final String apiUrl = '$baseUrl/users/$id';
 
     try {
       final response = await http.get(
@@ -29,7 +30,7 @@ class AuthRepository {
   }
 
   Future<void> setCurrentLocation(String id, Position position) async {
-    final String apiUrl = 'http://192.168.8.105:5000/users/$id/location';
+    final String apiUrl = '$baseUrl/users/$id/location';
 
     final Map<String, dynamic> locationData = {
       'latitude': position.latitude,
@@ -51,7 +52,7 @@ class AuthRepository {
   }
 
   Future<void> updateStatus(String id, bool status) async {
-    final String apiUrl = 'http://192.168.8.105:5000/users/$id/status/$status';
+    final String apiUrl = '$baseUrl/users/$id/status/$status';
 
     try {
       var response = await http.patch(
@@ -75,7 +76,7 @@ class AuthRepository {
 
     // Send the login request
     final response = await http.post(
-      Uri.parse('http://192.168.8.105:5000/auth/login'),
+      Uri.parse('$baseUrl/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(requestBody),
     );

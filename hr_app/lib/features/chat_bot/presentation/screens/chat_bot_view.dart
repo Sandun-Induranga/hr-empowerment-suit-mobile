@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_app/core/widgets/common_page_widgets/common_page_boiler_plate.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/ApiConstants.dart';
 import '../../../../core/constants/app_paddings.dart';
 import '../../../../core/constants/color_codes.dart';
 import '../../../../core/widgets/common_page_widgets/common_app_bar.dart';
@@ -29,16 +30,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   bool _isRaindropsGenerated = false;
   Color _currentColor = Colors.blue;
   final ScrollController _scrollController = ScrollController();
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
-  }
 
   @override
   void initState() {
@@ -103,12 +94,22 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _messages.add({'text': _controller.text, 'sender': 'user'});
     });
-    _scrollToBottom();
-
+    Future.delayed(
+        const Duration(milliseconds: 500), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController
+              .position.maxScrollExtent,
+          duration:
+          const Duration(milliseconds: 10),
+          curve: Curves.ease,
+        );
+      }
+    });
     try {
       final response = await http
           .post(
-            Uri.parse('http://192.168.8.105:8000/chat/'),
+            Uri.parse('$chatBotUrl/chat/'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -123,7 +124,18 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         setState(() {
           _messages.add({'text': 'Bot: $reply', 'sender': 'bot'});
         });
-        _scrollToBottom();
+        Future.delayed(
+            const Duration(milliseconds: 500), () {
+          if (_scrollController.hasClients) {
+            _scrollController.animateTo(
+              _scrollController
+                  .position.maxScrollExtent,
+              duration:
+              const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          }
+        });
       } else {
         print('Failed to send message');
       }
@@ -135,12 +147,36 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           'sender': 'bot'
         });
       });
+      Future.delayed(
+          const Duration(milliseconds: 500), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController
+                .position.maxScrollExtent,
+            duration:
+            const Duration(milliseconds: 10),
+            curve: Curves.ease,
+          );
+        }
+      });
     } catch (e) {
       print(e);
     }
 
     _controller.clear();
     _animationController.forward(from: 0.0);
+    Future.delayed(
+        const Duration(milliseconds: 500), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController
+              .position.maxScrollExtent,
+          duration:
+          const Duration(milliseconds: 10),
+          curve: Curves.ease,
+        );
+      }
+    });
   }
 
   @override
@@ -204,6 +240,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                       child: TextFormField(
                         controller: _controller,
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: AppPaddings.p12.w,
@@ -221,10 +258,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter number of days';
-                          } else if (int.tryParse(value) == null ||
-                              int.tryParse(value)! <= 0) {
-                            return 'Please enter a valid number of days';
+                            return 'Please enter a message';
                           }
                           return null;
                         },
